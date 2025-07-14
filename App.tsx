@@ -32,6 +32,8 @@ const App = () => {
     // initializeNotifications();
   }, []);
 
+  const TabNav = () => {};
+
   return (
     <AppContext>
       <NavigationContainer>
@@ -69,12 +71,13 @@ const App = () => {
           <Stack.Screen
             name="AddressSearch"
             component={AddressSearch}
-            screenOptions={{
-              headerTitleAlign: 'center', // Center the title
-            }}
             options={{
-              title: 'Search Location',
+              headerTitleAlign: 'center',
+              title: 'Search Location', // Center the title
             }}
+            // options={{
+            //   ,
+            // }}
           />
           <Stack.Screen
             name="AddAddressDetail"

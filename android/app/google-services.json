@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "941943976685",
+    "project_id": "petsfolio-2204f",
+    "storage_bucket": "petsfolio-2204f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:941943976685:android:192ab6431be79e222812e4",
+        "android_client_info": {
+          "package_name": "com.petsfolio.customer"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBG-sX-I3LMqhcvkbeuCRgZ3e6sYAGFc0c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:941943976685:android:07c5d772412dff182812e4",
+        "android_client_info": {
+          "package_name": "com.petsfolio.employee"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBG-sX-I3LMqhcvkbeuCRgZ3e6sYAGFc0c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

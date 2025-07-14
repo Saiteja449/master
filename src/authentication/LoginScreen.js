@@ -5,7 +5,7 @@ import {
   TouchableWithoutFeedback,
   TextInput,
   Alert,
-  TouchableOpacity
+  TouchableOpacity,
 } from 'react-native';
 import globle_Style from '../css/globle_Style';
 // import IndFlag from '../../assets/images/ind_flag.svg';
@@ -32,13 +32,12 @@ const LoginScreen = ({ navigation }) => {
   const validateEmail = email => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   const validNumber = number => /^\d{10}$/.test(number);
 
-
-  // login error message  
-  const [phoneValueError, setPhoneValueError] = useState(false)
-  const [emailValueError, setemailValueError] = useState(false)
-  const [invalid, setinvalid] = useState('')
-  const [invalidBoolean, setinvalidBoolean] = useState(false)
-  const [isDisable, setIsDisable] = useState(false)
+  // login error message
+  const [phoneValueError, setPhoneValueError] = useState(false);
+  const [emailValueError, setemailValueError] = useState(false);
+  const [invalid, setinvalid] = useState('');
+  const [invalidBoolean, setinvalidBoolean] = useState(false);
+  const [isDisable, setIsDisable] = useState(false);
 
   function LoginNavigate() {
     navigation.navigate('Confirm Your Number', {
@@ -61,34 +60,33 @@ const LoginScreen = ({ navigation }) => {
     return () => clearTimeout(timer);
   };
 
-  const validatePhoneNumber = (number) => {
+  const validatePhoneNumber = number => {
     const phoneRegex = /^[1-9][0-9]{9}$/; // 10 digits, first digit 1-9
     return phoneRegex.test(number);
   };
 
   // phone number valid
   const handleLogin = async () => {
+    console.log(FCMTOKEN);
 
-
-    // phone number 
+    // phone number
     if (phoneValue === null || phoneValue === '') {
       setPhoneValueError('Please enter the Mobile number '); //Show this message if phone number is null or empty
-      setinvalidBoolean(false)
-      return
+      setinvalidBoolean(false);
+      return;
     } else if (phoneValue.length < 10) {
       setPhoneValueError('Mobile number must be 10 characters'); // Show this message if the name is too short
-      setinvalidBoolean(false)
-      return
-    } else if(!validatePhoneNumber(phoneValue)){
+      setinvalidBoolean(false);
+      return;
+    } else if (!validatePhoneNumber(phoneValue)) {
       setPhoneValueError('Invalid mobile number'); // Show this message if the name is too short
-      setinvalidBoolean(false)
-      return
-
+      setinvalidBoolean(false);
+      return;
     } else {
       setPhoneValueError(false); // Clear any error message if the name is valid
     }
 
-    // email id 
+    // email id
     // if (!emailValue) {
     //   setemailValueError('Please enter a email Id '); // Show this message if vetName is empty
     //   setinvalidBoolean(false)
@@ -97,14 +95,13 @@ const LoginScreen = ({ navigation }) => {
     //   setemailValueError(false); // Clear any error message if the name is valid
     // }
 
-    
     if (!isConnected) {
       console.error('Error during login: NO Internet');
       setValidate(false);
       return;
     }
 
-    setIsDisable(true)
+    setIsDisable(true);
     try {
       const url = `${API_BASE_URL}provider/login`;
       const response = await fetch(url, {
@@ -120,21 +117,19 @@ const LoginScreen = ({ navigation }) => {
       const result = await response.json();
 
       if (result.status) {
-        setIsDisable(false)
+        setIsDisable(false);
         LoginNavigate();
       } else {
         console.warn('FASLEEE ', result);
-        setIsDisable(false)
-        setinvalidBoolean(true)
-        setinvalid('invalid credential')
-
+        setIsDisable(false);
+        setinvalidBoolean(true);
+        setinvalid('invalid credential');
       }
     } catch (error) {
-      setinvalidBoolean(true)
-      setinvalid('something went worng')
+      setinvalidBoolean(true);
+      setinvalid('something went worng');
 
       console.error('Error during login:', error);
-
     }
   };
 
@@ -161,7 +156,12 @@ const LoginScreen = ({ navigation }) => {
       </View>
       <View style={globle_Style.login_frm}>
         <View>
-          <View style={[globle_Style.serv_form, { marginBottom: phoneValueError ? 5 : 10 }]}>
+          <View
+            style={[
+              globle_Style.serv_form,
+              { marginBottom: phoneValueError ? 5 : 10 },
+            ]}
+          >
             <CountrySelector />
             <CountryPicker
               show={showCountryCode}
@@ -176,15 +176,17 @@ const LoginScreen = ({ navigation }) => {
               placeholder="Phone number"
               onChangeText={setPhoneValue}
               style={
-                validate ? globle_Style.input_phone : globle_Style.inputfieldError
+                validate
+                  ? globle_Style.input_phone
+                  : globle_Style.inputfieldError
               }
               keyboardType="numeric"
               maxLength={10}
             />
           </View>
-          {
-            phoneValueError && <Text style={globle_Style.errorText}>{phoneValueError}</Text>
-          }
+          {phoneValueError && (
+            <Text style={globle_Style.errorText}>{phoneValueError}</Text>
+          )}
         </View>
 
         {/* <View style={[globle_Style.serv_form, { marginBottom: emailValueError ? 5 : 10 }]}>
@@ -200,15 +202,20 @@ const LoginScreen = ({ navigation }) => {
         </View> */}
         {/* {emailValueError && <Text style={globle_Style.errorText}>{emailValueError}</Text>} */}
       </View>
-      {
-        invalidBoolean ? <View style={[globle_Style.errorstrip, { marginBottom: invalid ? 10 : 0 }]}><Text style={globle_Style.errorText}>{invalid}</Text></View> : null
-      }
+      {invalidBoolean ? (
+        <View
+          style={[globle_Style.errorstrip, { marginBottom: invalid ? 10 : 0 }]}
+        >
+          <Text style={globle_Style.errorText}>{invalid}</Text>
+        </View>
+      ) : null}
       <TouchableWithoutFeedback onPress={() => handleLogin()}>
-        <View style={[globle_Style.globle_btn,]}>
+        <View style={[globle_Style.globle_btn]}>
           <LinearGradient
             colors={['#FBAB51', '#FE8705']}
             start={{ x: 0, y: 1 }}
-            style={[globle_Style.globle_btn, {opacity: isDisable ? 0.5 : 1}]}>
+            style={[globle_Style.globle_btn, { opacity: isDisable ? 0.5 : 1 }]}
+          >
             <Text style={globle_Style.gbl_btn}>Continue</Text>
           </LinearGradient>
         </View>

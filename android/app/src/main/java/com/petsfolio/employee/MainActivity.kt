@@ -1,4 +1,4 @@
-package com.petsfoliomaster
+package com.petsfolio.employee
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate

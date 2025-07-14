@@ -1,4 +1,4 @@
-package com.petsfoliomaster
+package com.petsfolio.employee
 
 import android.app.Application
 import com.facebook.react.PackageList
