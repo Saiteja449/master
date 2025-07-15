@@ -124,14 +124,41 @@ messaging()
     }
   });
 
+// export const getFCMTOKEN = async () => {
+//   try {
+//     const token = await messaging().getToken();
+//     console.warn(token);
+//     return token; // Correctly returning the token here
+//   } catch (error) {
+//     console.error('Error getting FCM Token:', error);
+//     return null; // Return null or handle error appropriately
+//   }
+// };
+
 export const getFCMTOKEN = async () => {
   try {
+    // iOS may need registration first
+    if (Platform.OS === 'ios') {
+      try {
+        // Quick test if already registered
+        await messaging().registerDeviceForRemoteMessages()
+        const token =  await messaging().getToken();
+        console.warn('FCM Token:FCM Token:FCM Token:FCM Token: ', token);
+        return token;
+      } catch (error) {
+        console.warn('FCM Token Error:FCM Token:FCM Token:FCM Token: ', error);
+        if (error.code === 'messaging/unregistered') {
+          await messaging().registerDeviceForRemoteMessages();
+        }
+      }
+    }
+
     const token = await messaging().getToken();
-    console.warn(token);
-    return token; // Correctly returning the token here
+    console.log('FCM Token:', token);
+    return token;
   } catch (error) {
     console.error('Error getting FCM Token:', error);
-    return null; // Return null or handle error appropriately
+    return null;
   }
 };
 

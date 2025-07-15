@@ -31,12 +31,13 @@ import Photos from '../../assets/images/photos.svg';
 import TermCond from '../../assets/images/term_cond.svg';
 import globle_Style from '../css/globle_Style';
 import LinearGradient from 'react-native-linear-gradient';
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { CommonActions, useFocusEffect, useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { API_BASE_URL } from '../constants/constant';
 import { clearUserData } from '../constants/storageUtils';
 // import RNRestart from 'react-native-restart';
 import User from '../../assets/images/user.svg';
+import DeviceInfo from 'react-native-device-info';
 
 const AccountScreens = () => {
   const navigation = useNavigation();
@@ -57,10 +58,12 @@ const AccountScreens = () => {
   );
 
   const getVeersion = async () => {
-    VersionModule.getVersionName().then(versionName => {
-      console.log('Version Name:', versionName);
-      setVersion(versionName);
-    });
+    // VersionModule.getVersionName().then(versionName => {
+    //   console.log('Version Name:', versionName);
+    //   setVersion(versionName);
+    // });
+    const localVersionName = DeviceInfo.getVersion();
+    setVersion(localVersionName);
   };
 
   const fetchApiData = async () => {
@@ -115,6 +118,12 @@ const AccountScreens = () => {
           // );
 
           clearUserData();
+          navigation.dispatch(
+            CommonActions.reset({
+              index: 0,
+              routes: [{ name: 'SplashScreen' }], // Navigate back to the Splash Screen
+            }),
+          );
 
           // RNRestart.Restart();
         },

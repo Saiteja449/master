@@ -146,253 +146,255 @@ const App = () => {
   //   );
   // };
   const HomeNavigations = () => (
-    <Stack.Navigator
-      screenOptions={{
-        headerTitleAlign: 'center',
-      }}
-    >
-      <Stack.Screen
-        name="Home"
-        component={Home}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Newjob"
-        component={NewJobs}
-        options={{
-          title: 'Dog Walking',
+    <AppContext>
+      <Stack.Navigator
+        screenOptions={{
           headerTitleAlign: 'center',
         }}
-      />
-      <Stack.Screen name="Quotes" component={AllQuotes} />
-      <Stack.Screen
-        name="Details"
-        component={QuoteDetails}
-        options={{
-          title: 'Quote Details', // Set the title text
-          headerTitleAlign: 'center', // Center the title
-        }}
-      />
-      <Stack.Screen
-        name="DetailsEdit"
-        component={QuoteDetailEdit}
-        options={{
-          title: 'Edit Quote', // Set the title text
-          headerTitleAlign: 'center', // Center the title
-        }}
-      />
-      <Stack.Screen
-        name="ActiveJobDetail"
-        component={ActiveJobDetail}
-        options={{
-          title: 'Active Jobs', // Set the title text
-          headerTitleAlign: 'center', // Center the title
-        }}
-      />
-      <Stack.Screen name="Notification" component={Notification} />
-      <Stack.Screen
-        name="Service Detail Boarding"
-        component={ServiceDetailBoarding}
-      />
-      <Stack.Screen
-        name="Service Detail Grooming"
-        component={ServiceDetailGrooming}
-      />
-      <Stack.Screen
-        name="Service Detail Traning"
-        component={ServiceDetailTraning}
-      />
-      <Stack.Screen name="Service Detail" component={ServiceDetail} />
-      <Stack.Screen name="Wallet" component={WalletScreen} />
-      <Stack.Screen
-        name="Bank Details"
-        component={BankDetailScreen}
-        options={{}}
-      />
-      <Stack.Screen
-        name="BankDetailScreen"
-        component={BankDetailScreen2}
-        options={{
-          headerTitleAlign: 'center', // Center the title
-          headerTitle: 'Bank Account Detail',
-        }}
-      />
-      <Stack.Screen
-        name="verifyBankOtp"
-        component={verifyBankOtp}
-        options={{ title: 'Confirm your account' }}
-      />
+      >
+        <Stack.Screen
+          name="Home"
+          component={Home}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Newjob"
+          component={NewJobs}
+          options={{
+            title: 'Dog Walking',
+            headerTitleAlign: 'center',
+          }}
+        />
+        <Stack.Screen name="Quotes" component={AllQuotes} />
+        <Stack.Screen
+          name="Details"
+          component={QuoteDetails}
+          options={{
+            title: 'Quote Details', // Set the title text
+            headerTitleAlign: 'center', // Center the title
+          }}
+        />
+        <Stack.Screen
+          name="DetailsEdit"
+          component={QuoteDetailEdit}
+          options={{
+            title: 'Edit Quote', // Set the title text
+            headerTitleAlign: 'center', // Center the title
+          }}
+        />
+        <Stack.Screen
+          name="ActiveJobDetail"
+          component={ActiveJobDetail}
+          options={{
+            title: 'Active Jobs', // Set the title text
+            headerTitleAlign: 'center', // Center the title
+          }}
+        />
+        <Stack.Screen name="Notification" component={Notification} />
+        <Stack.Screen
+          name="Service Detail Boarding"
+          component={ServiceDetailBoarding}
+        />
+        <Stack.Screen
+          name="Service Detail Grooming"
+          component={ServiceDetailGrooming}
+        />
+        <Stack.Screen
+          name="Service Detail Traning"
+          component={ServiceDetailTraning}
+        />
+        <Stack.Screen name="Service Detail" component={ServiceDetail} />
+        <Stack.Screen name="Wallet" component={WalletScreen} />
+        <Stack.Screen
+          name="Bank Details"
+          component={BankDetailScreen}
+          options={{}}
+        />
+        <Stack.Screen
+          name="BankDetailScreen"
+          component={BankDetailScreen2}
+          options={{
+            headerTitleAlign: 'center', // Center the title
+            headerTitle: 'Bank Account Detail',
+          }}
+        />
+        <Stack.Screen
+          name="verifyBankOtp"
+          component={verifyBankOtp}
+          options={{ title: 'Confirm your account' }}
+        />
 
-      <Stack.Screen name="Boarding" component={boardingDummyScreen} />
+        <Stack.Screen name="Boarding" component={boardingDummyScreen} />
 
-      <Stack.Screen name="Training" component={trainingDummyScreen} />
-      <Stack.Screen name="Insurance" component={insuranceDummyScreen} />
-      <Stack.Screen name="Grooming" component={groomingDummyScreen} />
-      <Stack.Screen
-        name="WalkTracking"
-        component={WalkTracking}
-        options={{
-          tabBarStyle: { display: 'none' }, // Hide tab bar for WalkTracking screen
-          // tabBarButton: () => null,  // Disable tab bar button for WalkTracking screen
-          headerShown: false, // Hide header for WalkTracking screen
-        }}
-      />
+        <Stack.Screen name="Training" component={trainingDummyScreen} />
+        <Stack.Screen name="Insurance" component={insuranceDummyScreen} />
+        <Stack.Screen name="Grooming" component={groomingDummyScreen} />
+        <Stack.Screen
+          name="WalkTracking"
+          component={WalkTracking}
+          options={{
+            tabBarStyle: { display: 'none' }, // Hide tab bar for WalkTracking screen
+            // tabBarButton: () => null,  // Disable tab bar button for WalkTracking screen
+            headerShown: false, // Hide header for WalkTracking screen
+          }}
+        />
 
-      <Stack.Screen
-        name="My Verification"
-        component={VerificationScreen}
-        options={{}}
-      />
-      <Stack.Screen
-        name="EmailVerification"
-        component={EmailVerification}
-        options={{ title: 'Email Verification' }}
-      />
-      {/* <Stack.Screen
+        <Stack.Screen
+          name="My Verification"
+          component={VerificationScreen}
+          options={{}}
+        />
+        <Stack.Screen
+          name="EmailVerification"
+          component={EmailVerification}
+          options={{ title: 'Email Verification' }}
+        />
+        {/* <Stack.Screen
           name="EmailVerificationopt"
           component={EmailVerificationOtp}
           options={{ title: 'Verifiy OTP' }}
         /> */}
-      <Stack.Screen
-        name="CertificateScreen"
-        component={CertificateScreen}
-        options={{ title: 'Upload Certificate' }}
-      />
+        <Stack.Screen
+          name="CertificateScreen"
+          component={CertificateScreen}
+          options={{ title: 'Upload Certificate' }}
+        />
 
-      <Stack.Screen
-        name="GroomingNewJob"
-        component={GroomingNewJobs}
-        options={{
-          title: 'Dog Grooming', // Set the title text
-          headerTitleAlign: 'center', // Center the title
-        }}
-      />
-      <Stack.Screen
-        name="GroomingQuoteDetails"
-        component={GroomingQuoteDetails}
-        options={{
-          title: 'Quote Details', // Set the title text
-          headerTitleAlign: 'center', // Center the title
-        }}
-      />
-      <Stack.Screen
-        name="GroomingQuoteDetailEdit"
-        component={GroomingQuoteDetailEdit}
-        options={{
-          title: 'Edit Quote', // Set the title text
-          headerTitleAlign: 'center', // Center the title
-        }}
-      />
+        <Stack.Screen
+          name="GroomingNewJob"
+          component={GroomingNewJobs}
+          options={{
+            title: 'Dog Grooming', // Set the title text
+            headerTitleAlign: 'center', // Center the title
+          }}
+        />
+        <Stack.Screen
+          name="GroomingQuoteDetails"
+          component={GroomingQuoteDetails}
+          options={{
+            title: 'Quote Details', // Set the title text
+            headerTitleAlign: 'center', // Center the title
+          }}
+        />
+        <Stack.Screen
+          name="GroomingQuoteDetailEdit"
+          component={GroomingQuoteDetailEdit}
+          options={{
+            title: 'Edit Quote', // Set the title text
+            headerTitleAlign: 'center', // Center the title
+          }}
+        />
 
-      <Stack.Screen
-        name="GroomingAllQuotes"
-        component={GroomingAllQuotes}
-        options={{ headerTitle: 'Quotes' }}
-      />
-      <Stack.Screen
-        name="GroomingActiveJobDetail"
-        component={GroomingActiveJobDetail}
-        options={{
-          title: 'Active Jobs', // Set the title text
-          headerTitleAlign: 'center', // Center the title
-        }}
-      />
-      <Stack.Screen
-        name="GroomingTracking"
-        component={GroomingTracking}
-        options={{
-          title: 'Grooming Tracking', // Set the title text
-          headerTitleAlign: 'center', // Center the title
-        }}
-      />
+        <Stack.Screen
+          name="GroomingAllQuotes"
+          component={GroomingAllQuotes}
+          options={{ headerTitle: 'Quotes' }}
+        />
+        <Stack.Screen
+          name="GroomingActiveJobDetail"
+          component={GroomingActiveJobDetail}
+          options={{
+            title: 'Active Jobs', // Set the title text
+            headerTitleAlign: 'center', // Center the title
+          }}
+        />
+        <Stack.Screen
+          name="GroomingTracking"
+          component={GroomingTracking}
+          options={{
+            title: 'Grooming Tracking', // Set the title text
+            headerTitleAlign: 'center', // Center the title
+          }}
+        />
 
-      <Stack.Screen
-        name="SelectCertificate"
-        component={SelectCertificate}
-        options={{ title: 'Certificates' }}
-      />
-      <Stack.Screen
-        name="ChatPage"
-        component={ChatPage}
-        options={{ headerShown: false }}
-      />
+        <Stack.Screen
+          name="SelectCertificate"
+          component={SelectCertificate}
+          options={{ title: 'Certificates' }}
+        />
+        <Stack.Screen
+          name="ChatPage"
+          component={ChatPage}
+          options={{ headerShown: false }}
+        />
 
-      <Stack.Screen
-        name="TrainingNewJob"
-        component={TrainingNewJobs}
-        options={{
-          title: 'Dog Training', // Set the title text
-          headerTitleAlign: 'center', // Center the title
-        }}
-      />
-      <Stack.Screen
-        name="TrainingQuoteDetails"
-        component={TrainingQuoteDetails}
-        options={{
-          title: 'Quote Details', // Set the title text
-          headerTitleAlign: 'center', // Center the title
-        }}
-      />
-      <Stack.Screen
-        name="TrainingQuoteDetailEdit"
-        component={TrainingQuoteDetailEdit}
-        options={{
-          title: 'Edit Quote', // Set the title text
-          headerTitleAlign: 'center', // Center the title
-        }}
-      />
+        <Stack.Screen
+          name="TrainingNewJob"
+          component={TrainingNewJobs}
+          options={{
+            title: 'Dog Training', // Set the title text
+            headerTitleAlign: 'center', // Center the title
+          }}
+        />
+        <Stack.Screen
+          name="TrainingQuoteDetails"
+          component={TrainingQuoteDetails}
+          options={{
+            title: 'Quote Details', // Set the title text
+            headerTitleAlign: 'center', // Center the title
+          }}
+        />
+        <Stack.Screen
+          name="TrainingQuoteDetailEdit"
+          component={TrainingQuoteDetailEdit}
+          options={{
+            title: 'Edit Quote', // Set the title text
+            headerTitleAlign: 'center', // Center the title
+          }}
+        />
 
-      <Stack.Screen
-        name="TrainingAllQuotes"
-        component={TrainingAllQuotes}
-        options={{ headerTitle: 'Quotes' }}
-      />
-      <Stack.Screen
-        name="TrainingActiveJobDetail"
-        component={TrainingActiveJobDetail}
-        options={{
-          title: 'Active Jobs', // Set the title text
-          headerTitleAlign: 'center', // Center the title
-        }}
-      />
+        <Stack.Screen
+          name="TrainingAllQuotes"
+          component={TrainingAllQuotes}
+          options={{ headerTitle: 'Quotes' }}
+        />
+        <Stack.Screen
+          name="TrainingActiveJobDetail"
+          component={TrainingActiveJobDetail}
+          options={{
+            title: 'Active Jobs', // Set the title text
+            headerTitleAlign: 'center', // Center the title
+          }}
+        />
 
-      <Stack.Screen
-        name="TrainingTracking"
-        component={TrainingTracking}
-        options={{
-          title: 'Training Tracking', // Set the title text
-          headerTitleAlign: 'center', // Center the title
-        }}
-      />
+        <Stack.Screen
+          name="TrainingTracking"
+          component={TrainingTracking}
+          options={{
+            title: 'Training Tracking', // Set the title text
+            headerTitleAlign: 'center', // Center the title
+          }}
+        />
 
-      <Stack.Screen
-        name="ReplaceTrainerScreen"
-        component={ReplaceTrainerScreen}
-        options={{
-          title: 'Quote Details', // Set the title text
-          headerTitleAlign: 'center', // Center the title
-        }}
-      />
+        <Stack.Screen
+          name="ReplaceTrainerScreen"
+          component={ReplaceTrainerScreen}
+          options={{
+            title: 'Quote Details', // Set the title text
+            headerTitleAlign: 'center', // Center the title
+          }}
+        />
 
-      <Stack.Screen
-        name="ReplaceTrainerEditScreen"
-        component={ReplaceTrainerEditScreen}
-        options={{
-          title: 'Edit Quote', // Set the title text
-          headerTitleAlign: 'center', // Center the title
-        }}
-      />
-    </Stack.Navigator>
+        <Stack.Screen
+          name="ReplaceTrainerEditScreen"
+          component={ReplaceTrainerEditScreen}
+          options={{
+            title: 'Edit Quote', // Set the title text
+            headerTitleAlign: 'center', // Center the title
+          }}
+        />
+      </Stack.Navigator>
+    </AppContext>
   );
 
   const TabNavigations = () => (
     <Tab.Navigator
-      initialRouteName="Home"
+      initialRouteName="Home1"
       screenOptions={({ route }) => ({
         tabBarIcon: ({ color, size, focused }) => {
           let iconName;
 
-          if (route.name === 'Home') {
+          if (route.name === 'Home1') {
             iconSource = focused ? ActiveHome : NonactHome;
           }
           // else if (route.name === 'Message') {
@@ -429,11 +431,12 @@ const App = () => {
       })}
     >
       <Tab.Screen
-        name="Home"
+        name="Home1"
         component={HomeNavigations}
         options={{
           headerShown: false,
           unmountOnBlur: true,
+          tabBarLabel: 'Home',
         }}
         listeners={({ navigation }) => ({
           tabPress: e => {
@@ -441,7 +444,7 @@ const App = () => {
             navigation.dispatch(
               CommonActions.reset({
                 index: 0,
-                routes: [{ name: 'Home' }],
+                routes: [{ name: 'Home1' }],
               }),
             );
           },

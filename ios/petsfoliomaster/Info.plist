@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>petsfoliomaster</string>
+	<string>Petsfolio Master</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -26,14 +26,30 @@
 	<true/>
 	<key>NSAppTransportSecurity</key>
 	<dict>
-	  <!-- Do not change NSAllowsArbitraryLoads to true, or you will risk app rejection! -->
 		<key>NSAllowsArbitraryLoads</key>
 		<false/>
 		<key>NSAllowsLocalNetworking</key>
 		<true/>
 	</dict>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>Petsfolio does not access your Apple Music library. This permission is not used.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Petsfolio uses your camera to let you capture and upload photos of your pet directly to their profile or service forms.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Petsfolio uses your location in the background to provide continuous updates for scheduled pet services like walks or pickups.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>Petsfolio needs your location while using the app to show nearby services and ensure accurate address selection for pet services.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Petsfolio needs access to your photo library so you can upload your pet’s photos and documents to their profile.</string>
+	<key>NSUserNotificationsUsageDescription</key>
+	<string>Petsfolio uses notifications to remind you about upcoming pet appointments, service updates, and important messages.</string>
+	<key>RCTNewArchEnabled</key>
+	<true/>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>remote-notification</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>

@@ -66,6 +66,7 @@ const GroomingNewJobs = () => {
   );
 
   const fetchNewJobsApiData = async () => {
+    console.warn('RESULTTTTTTT :: checkkkkkkkkkkkkkkkkkkk ', userData);
     const url = `${API_BASE_URL}provider/${userData.id}/newJobs/2`;
     // const url = `${API_BASE_URL}provider/715/newJobs/2`;
 

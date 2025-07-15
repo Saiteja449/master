@@ -23,7 +23,7 @@ import { set } from '@react-native-firebase/database';
 const LoginScreen = ({ navigation }) => {
   const [phoneValue, setPhoneValue] = useState('');
   const [emailValue, setEmailValue] = useState('');
-  const [FCMTOKEN, setFCMTOKEN] = useState('');
+  const [FCMTOKEN, setFCMTOKEN] = useState('fcmtokennn');
   const [validate, setValidate] = useState(true);
   const { isConnected } = useContext(NetworkContext);
   const [showCountryCode, setCountryCodeShow] = useState(false);
