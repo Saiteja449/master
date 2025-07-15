@@ -1,40 +1,53 @@
 import React, { useContext, useEffect, useState, useCallback } from 'react';
-import { ScrollView, Text, TouchableWithoutFeedback, View, StyleSheet, TouchableOpacity, SafeAreaView, ActivityIndicator, FlatList, Image, Modal, Alert, Linking } from 'react-native';
+import {
+  ScrollView,
+  Text,
+  TouchableWithoutFeedback,
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  SafeAreaView,
+  ActivityIndicator,
+  FlatList,
+  Image,
+  Modal,
+  Alert,
+  Linking,
+} from 'react-native';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import globle_Style from '../css/globle_Style';
-import NewjobOne from '../../assets/images/newjob_one.svg'
-import DistaneMap from '../../assets/images/distance_map.svg'
+import NewjobOne from '../../assets/images/newjob_one.svg';
+import DistaneMap from '../../assets/images/distance_map.svg';
 import LinearGradient from 'react-native-linear-gradient';
 import { useTheme } from '@react-navigation/native';
 import { UserContext } from '../common/AppContext';
 import { API_BASE_URL, formatDate } from '../constants/constant';
-import ClosePopup from '../../assets/images/close_popup.svg'
-import Clockwalk from '../../assets/images/clock_walk.svg'
+import ClosePopup from '../../assets/images/close_popup.svg';
+import Clockwalk from '../../assets/images/clock_walk.svg';
 import Msg from '../../assets/images/msg.svg';
 import { useFocusEffect } from '@react-navigation/native';
-import moment from "moment";
+import moment from 'moment';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const Tab = createMaterialTopTabNavigator()
+const Tab = createMaterialTopTabNavigator();
 
 const GroomingNewJobs = () => {
+  const navination = useNavigation();
+  const { userData } = useContext(UserContext);
+  const [newJobData, setNewJobData] = useState([]);
+  const [myQuoteData, setMyQuoteJobData] = useState([]);
+  const [activeJobData, setActiveJobData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [editDetail, setEditDetail] = useState(false);
+  const [selectRadio, setselectedRadio] = useState(-1);
+  const [selectedActiveJobTime, setSelectedActiveJobTime] = useState([]);
+  const [todayActiveJob, setTodayActiveJob] = useState([]);
+  const [upcomingActiveJob, setUpcomingActiveJob] = useState([]);
 
-  const navination = useNavigation()
-  const { userData } = useContext(UserContext)
-  const [newJobData, setNewJobData] = useState([])
-  const [myQuoteData, setMyQuoteJobData] = useState([])
-  const [activeJobData, setActiveJobData] = useState([])
-  const [isLoading, setIsLoading] = useState(true)
-  const [editDetail, setEditDetail] = useState(false)
-  const [selectRadio, setselectedRadio] = useState(-1)
-  const [selectedActiveJobTime, setSelectedActiveJobTime] = useState([])
-  const [todayActiveJob, setTodayActiveJob] = useState([])
-  const [upcomingActiveJob, setUpcomingActiveJob] = useState([])
-
-  const [selectedActiveTime, setSelectedActiveTime] = useState('')
-  const [selectedActiveBookingId, setSelectedActiveBookingId] = useState('')
-  const [selectedActivePetId, setSelectedActivePetId] = useState('')
+  const [selectedActiveTime, setSelectedActiveTime] = useState('');
+  const [selectedActiveBookingId, setSelectedActiveBookingId] = useState('');
+  const [selectedActivePetId, setSelectedActivePetId] = useState('');
 
   // useEffect(() => {
   //   fetchNewJobsApiData()
@@ -44,12 +57,12 @@ const GroomingNewJobs = () => {
 
   useFocusEffect(
     React.useCallback(() => {
-      fetchNewJobsApiData()
-      fetchMyQuoteApiData()
-      fetchActiveJobsApiData()
+      fetchNewJobsApiData();
+      fetchMyQuoteApiData();
+      fetchActiveJobsApiData();
 
       return () => console.log('Screen unfocused');
-    }, [])
+    }, []),
   );
 
   const fetchNewJobsApiData = async () => {
@@ -60,21 +73,19 @@ const GroomingNewJobs = () => {
       const response = await fetch(url, {
         method: 'GET',
         headers: {
-          'Authorization': `Bearer ${userData.token}`,
+          Authorization: `Bearer ${userData.token}`,
           // 'Authorization': `Bearer 660d826901473935a06cf6414f2debc2`,
-          'Content-Type': 'application/json'
-        }
+          'Content-Type': 'application/json',
+        },
       });
 
       const result = await response.json();
       if (result.status == true) {
-
-        console.warn("RESULTTTTTTT :: ", result)
-        setNewJobData(result.data)
-        setIsLoading(false)
-
+        console.warn('RESULTTTTTTT :: ', result);
+        setNewJobData(result.data);
+        setIsLoading(false);
       } else {
-        console.warn("eelseeeee ", result);
+        console.warn('eelseeeee ', result);
       }
     } catch (error) {
       console.warn('Network request failed', error);
@@ -88,20 +99,18 @@ const GroomingNewJobs = () => {
       const response = await fetch(url, {
         method: 'GET',
         headers: {
-          'Authorization': `Bearer ${userData.token}`,
-          'Content-Type': 'application/json'
-        }
+          Authorization: `Bearer ${userData.token}`,
+          'Content-Type': 'application/json',
+        },
       });
 
       const result = await response.json();
       if (result.status == true) {
-
-        console.warn("RESULTTTTTTT1111 :: ", result.data)
-        setMyQuoteJobData(result.data)
-        setIsLoading(false)
-
+        console.warn('RESULTTTTTTT1111 :: ', result.data);
+        setMyQuoteJobData(result.data);
+        setIsLoading(false);
       } else {
-        console.warn("Elseee11111 :: ", result);
+        console.warn('Elseee11111 :: ', result);
       }
     } catch (error) {
       console.warn('Network request failed');
@@ -115,22 +124,20 @@ const GroomingNewJobs = () => {
       const response = await fetch(url, {
         method: 'GET',
         headers: {
-          'Authorization': `Bearer ${userData.token}`,
-          'Content-Type': 'application/json'
-        }
+          Authorization: `Bearer ${userData.token}`,
+          'Content-Type': 'application/json',
+        },
       });
 
       const result = await response.json();
       if (result.status) {
-
-        console.warn("RESULTTTTTTT222222 :: ", result.data)
-        setTodayActiveJob(result.data.todays_bookings)
-        setUpcomingActiveJob(result.data.upcoming_bookings)
-        setActiveJobData(result.data)
-        setIsLoading(false)
-
+        console.warn('RESULTTTTTTT222222 :: ', result.data);
+        setTodayActiveJob(result.data.todays_bookings);
+        setUpcomingActiveJob(result.data.upcoming_bookings);
+        setActiveJobData(result.data);
+        setIsLoading(false);
       } else {
-        console.warn("Elseee2222222 :: ", result);
+        console.warn('Elseee2222222 :: ', result);
       }
     } catch (error) {
       console.warn('Network request failed', error);
@@ -138,10 +145,13 @@ const GroomingNewJobs = () => {
   };
 
   const renderItemNewJobs = ({ item }) => {
-
-    const packageNames = item.packages && item.packages.length > 0
-      ? item.packages.map(pkg => pkg.package_name).join(', ').trim()
-      : '';
+    const packageNames =
+      item.packages && item.packages.length > 0
+        ? item.packages
+            .map(pkg => pkg.package_name)
+            .join(', ')
+            .trim()
+        : '';
 
     return (
       <View style={globle_Style.newjob_sec}>
@@ -149,7 +159,10 @@ const GroomingNewJobs = () => {
           <View style={globle_Style.newjob_lst}>
             <View style={globle_Style.newjob_itm_lft}>
               {item.pets.length > 0 ? (
-                <Image source={{ uri: item.pets[0].image }} style={{ width: 60, height: 60, borderRadius: 30 }} />
+                <Image
+                  source={{ uri: item.pets[0].image }}
+                  style={{ width: 60, height: 60, borderRadius: 30 }}
+                />
               ) : (
                 <NewjobOne />
               )}
@@ -157,18 +170,25 @@ const GroomingNewJobs = () => {
             <View style={globle_Style.newjob_itm_rgt}>
               <View style={globle_Style.newjob_txt_con}>
                 <View style={globle_Style.newjob_txt_lft}>
-                  <Text style={globle_Style.job_exp}>
-                    {packageNames}
-                  </Text>
+                  <Text style={globle_Style.job_exp}>{packageNames}</Text>
                   <View style={globle_Style.job_distc}>
                     <View style={globle_Style.newjob_txt_rgt}>
                       <DistaneMap />
-                      <Text style={globle_Style.distc_txt}>{item.distance} away</Text>
+                      <Text style={globle_Style.distc_txt}>
+                        {item.distance} away
+                      </Text>
                     </View>
                   </View>
                 </View>
                 <View style={globle_Style.newjob_rate_con}>
-                  <Text style={[globle_Style.newjob_itm_rate, { fontSize: 12, marginRight: 5 }]}>₹{item.total_price}</Text>
+                  <Text
+                    style={[
+                      globle_Style.newjob_itm_rate,
+                      { fontSize: 12, marginRight: 5 },
+                    ]}
+                  >
+                    ₹{item.total_price}
+                  </Text>
                   {/* <Text style={globle_Style.newjob_rate_day}>{item.days} days</Text> */}
                 </View>
               </View>
@@ -180,15 +200,32 @@ const GroomingNewJobs = () => {
                 <Msg />
               </View>
             </TouchableOpacity> */}
-            <TouchableWithoutFeedback onPress={() => navination.navigate('GroomingAllQuotes', { item: item, showmyquote: false })}>
-              <Text style={[globle_Style.white_btn]}>Total Quotes {item.totalQuotes}</Text>
+            <TouchableWithoutFeedback
+              onPress={() =>
+                navination.navigate('GroomingAllQuotes', {
+                  item: item,
+                  showmyquote: false,
+                })
+              }
+            >
+              <Text style={[globle_Style.white_btn]}>
+                Total Quotes {item.totalQuotes}
+              </Text>
             </TouchableWithoutFeedback>
-            <TouchableOpacity onPress={() => navination.navigate('GroomingQuoteDetails', {
-              item: item,
-              isEdit: false
-            })}>
+            <TouchableOpacity
+              onPress={() =>
+                navination.navigate('GroomingQuoteDetails', {
+                  item: item,
+                  isEdit: false,
+                })
+              }
+            >
               <View style={[globle_Style.newjob_btn_con]}>
-                <LinearGradient colors={['#FBAB51', '#FE8705']} start={{ x: 0, y: 1 }} style={[globle_Style.gbl_btn_two]}>
+                <LinearGradient
+                  colors={['#FBAB51', '#FE8705']}
+                  start={{ x: 0, y: 1 }}
+                  style={[globle_Style.gbl_btn_two]}
+                >
                   <Text style={globle_Style.gbl_btn_two}>Offer Now</Text>
                 </LinearGradient>
               </View>
@@ -199,9 +236,7 @@ const GroomingNewJobs = () => {
     );
   };
 
-
   // const renderItemNewJobs = ({ item }) => (
-
 
   //   <View style={globle_Style.newjob_sec}>
   //     <View style={globle_Style.newjob_con}>
@@ -248,17 +283,31 @@ const GroomingNewJobs = () => {
   // );
 
   const renderItemMyQuotes = ({ item }) => {
-
-    const packageNames = item.packages && item.packages.length > 0
-      ? item.packages.map(pkg => pkg.package_name).join(', ').trim()
-      : '';
+    const packageNames =
+      item.packages && item.packages.length > 0
+        ? item.packages
+            .map(pkg => pkg.package_name)
+            .join(', ')
+            .trim()
+        : '';
 
     return (
-
-      <View style={[globle_Style.newjob_con, { marginHorizontal: 16, marginTop: 5 }]}>
+      <View
+        style={[
+          globle_Style.newjob_con,
+          { marginHorizontal: 16, marginTop: 5 },
+        ]}
+      >
         <View style={globle_Style.newjob_lst}>
           <View style={globle_Style.newjob_itm_lft}>
-            {item.pets.length > 0 ? <Image source={{ uri: item.pets[0].image }} style={{ width: 60, height: 60, borderRadius: 30 }} /> : <NewjobOne />}
+            {item.pets.length > 0 ? (
+              <Image
+                source={{ uri: item.pets[0].image }}
+                style={{ width: 60, height: 60, borderRadius: 30 }}
+              />
+            ) : (
+              <NewjobOne />
+            )}
           </View>
           <View style={globle_Style.newjob_itm_rgt}>
             <View style={globle_Style.newjob_txt_con}>
@@ -267,83 +316,144 @@ const GroomingNewJobs = () => {
                 <View style={globle_Style.job_distc}>
                   <View style={globle_Style.newjob_txt_rgt}>
                     <DistaneMap />
-                    <Text style={globle_Style.distc_txt}>{item.distance} km away</Text>
+                    <Text style={globle_Style.distc_txt}>
+                      {item.distance} km away
+                    </Text>
                   </View>
                 </View>
               </View>
               <View style={globle_Style.newjob_rate_con}>
-                <Text style={[globle_Style.newjob_itm_rate, { fontSize: 14, marginRight: 5 }]}>₹{item.receivable_amount}</Text>
+                <Text
+                  style={[
+                    globle_Style.newjob_itm_rate,
+                    { fontSize: 14, marginRight: 5 },
+                  ]}
+                >
+                  ₹{item.receivable_amount}
+                </Text>
                 {/* <Text style={globle_Style.newjob_rate_day}>{item.days} days</Text> */}
               </View>
             </View>
           </View>
         </View>
-        <View style={[globle_Style.newjob_btn, { paddingRight: 0, alignItems: 'center', justifyContent: 'flex-start' },]}>
-          <TouchableOpacity onPress={() => navination.navigate('ChatPage', { userId: `${userData.name}_${userData.id}`, otherUserId: `${item.user_name}_${item.user_id}`, name: item.user_name, image: item.user_profile, bookingId: item.booking_id, token: item.device_token })}>
+        <View
+          style={[
+            globle_Style.newjob_btn,
+            {
+              paddingRight: 0,
+              alignItems: 'center',
+              justifyContent: 'flex-start',
+            },
+          ]}
+        >
+          <TouchableOpacity
+            onPress={() =>
+              navination.navigate('ChatPage', {
+                userId: `${userData.name}_${userData.id}`,
+                otherUserId: `${item.user_name}_${item.user_id}`,
+                name: item.user_name,
+                image: item.user_profile,
+                bookingId: item.booking_id,
+                token: item.device_token,
+              })
+            }
+          >
             <View style={{ marginRight: 16 }}>
               <Msg />
             </View>
           </TouchableOpacity>
-          <TouchableWithoutFeedback onPress={() => navination.navigate('GroomingAllQuotes', { item: item, showmyquote: true })}>
-            <Text style={[globle_Style.white_btn, { paddingHorizontal: 12, }]}>Total Quotes {item.totalQuotes}</Text>
+          <TouchableWithoutFeedback
+            onPress={() =>
+              navination.navigate('GroomingAllQuotes', {
+                item: item,
+                showmyquote: true,
+              })
+            }
+          >
+            <Text style={[globle_Style.white_btn, { paddingHorizontal: 12 }]}>
+              Total Quotes {item.totalQuotes}
+            </Text>
           </TouchableWithoutFeedback>
           <TouchableWithoutFeedback>
-            <TouchableOpacity onPress={() => navination.navigate('GroomingQuoteDetailEdit', {
-              item: item,
-              isEdit: true
-            })}>
+            <TouchableOpacity
+              onPress={() =>
+                navination.navigate('GroomingQuoteDetailEdit', {
+                  item: item,
+                  isEdit: true,
+                })
+              }
+            >
               <View style={[globle_Style.newquta_btn_con]}>
-                <Text style={[globle_Style.white_btn, globle_Style.newquta_btn, { paddingHorizontal: 20 }]}>Edit</Text>
+                <Text
+                  style={[
+                    globle_Style.white_btn,
+                    globle_Style.newquta_btn,
+                    { paddingHorizontal: 20 },
+                  ]}
+                >
+                  Edit
+                </Text>
               </View>
             </TouchableOpacity>
           </TouchableWithoutFeedback>
           <TouchableOpacity onPress={() => DeleteDialog(item.quotation_id)}>
             <View style={[globle_Style.newquta_btn_con, { marginLeft: 0 }]}>
-              <Text style={[globle_Style.white_btn, { marginHorizontal: 10 }]}>Delete</Text>
+              <Text style={[globle_Style.white_btn, { marginHorizontal: 10 }]}>
+                Delete
+              </Text>
             </View>
           </TouchableOpacity>
         </View>
       </View>
     );
-  }
+  };
 
-  const handleStartWalking = (selectedTime, completedTimings, selectedBookingId, selectedPetId) => {
-    setselectedRadio(-1)
+  const handleStartWalking = (
+    selectedTime,
+    completedTimings,
+    selectedBookingId,
+    selectedPetId,
+  ) => {
+    setselectedRadio(-1);
 
+    console.warn('SSSSSSSSSSSSSS', selectedTime);
+    console.warn('SSSSSSSSSSSSSS11', selectedBookingId);
+    console.warn('SSSSSSSSSSSSSS22', selectedPetId);
 
-    console.warn("SSSSSSSSSSSSSS", selectedTime)
-    console.warn("SSSSSSSSSSSSSS11", selectedBookingId)
-    console.warn("SSSSSSSSSSSSSS22", selectedPetId)
-
-    setSelectedActiveJobTime(filterTimes(selectedTime, completedTimings).split(','))
-    setSelectedActiveBookingId(selectedBookingId)
-    setSelectedActivePetId(selectedPetId)
-    setEditDetail(true)
-  }
+    setSelectedActiveJobTime(
+      filterTimes(selectedTime, completedTimings).split(','),
+    );
+    setSelectedActiveBookingId(selectedBookingId);
+    setSelectedActivePetId(selectedPetId);
+    setEditDetail(true);
+  };
 
   const filterTimes = (preferableTime, completedTime) => {
+    const preferableTimesArray = preferableTime
+      .split(',')
+      .map(time => time.trim());
+    const completedTimesArray = completedTime
+      .split(',')
+      .map(time => time.trim()); // Treat completedTime as potentially multiple times
 
-    const preferableTimesArray = preferableTime.split(',').map(time => time.trim());
-    const completedTimesArray = completedTime.split(',').map(time => time.trim()); // Treat completedTime as potentially multiple times
-
-    const filteredTimes = preferableTimesArray.filter(time => !completedTimesArray.includes(time));
+    const filteredTimes = preferableTimesArray.filter(
+      time => !completedTimesArray.includes(time),
+    );
 
     return filteredTimes.join(', ');
   };
 
-
-
   const handleEndWalking = (selectedTime, selectedBookingId, selectedPetId) => {
-    console.warn("SSSSSSSSSSSSSS", selectedTime)
-    console.warn("SSSSSSSSSSSSSS11", selectedBookingId)
-    console.warn("SSSSSSSSSSSSSS22", selectedPetId)
+    console.warn('SSSSSSSSSSSSSS', selectedTime);
+    console.warn('SSSSSSSSSSSSSS11', selectedBookingId);
+    console.warn('SSSSSSSSSSSSSS22', selectedPetId);
 
     const data = {
       booking_id: selectedBookingId,
       provider_id: userData.id,
       pet_id: selectedPetId,
       service_time: selectedTime,
-      action: 'end'
+      action: 'end',
     };
 
     // navination.navigate('WalkTracking', { uniqueKey1: appendBookingDetails(selectedBookingId, selectedTime), data: data, walk_duration: todayActiveJob.walk_duration });
@@ -353,51 +463,59 @@ const GroomingNewJobs = () => {
     // setSelectedActivePetId(selectedPetId)
 
     Alert.alert(
-      "End Walk!!!",
-      "Are you sure you want to complete the walk?",
+      'End Walk!!!',
+      'Are you sure you want to complete the walk?',
       [
-        { text: "Yes", onPress: () => handleManageEndWalk(selectedTime, selectedBookingId, selectedPetId) },
-        { text: "Cancel", onPress: () => console.log("Cancel Pressed") }
+        {
+          text: 'Yes',
+          onPress: () =>
+            handleManageEndWalk(selectedTime, selectedBookingId, selectedPetId),
+        },
+        { text: 'Cancel', onPress: () => console.log('Cancel Pressed') },
       ],
-      { cancelable: true } // You can set it to false to prevent closing the alert by tapping outside
+      { cancelable: true }, // You can set it to false to prevent closing the alert by tapping outside
     );
-  }
+  };
 
-  const handleGrooming = async (selectedBookingId, selectedPetId, trackStatus, item) => {
-
-    console.warn("ITMAMAMAMAMAMAMA : ", item)
+  const handleGrooming = async (
+    selectedBookingId,
+    selectedPetId,
+    trackStatus,
+    item,
+  ) => {
+    console.warn('ITMAMAMAMAMAMAMA : ', item);
     // return
-
 
     // navination.navigate('GroomingTracking', {item: item})
     // return
-    let editt = null
+    let editt = null;
 
     if (trackStatus === 'not_started') {
-      editt = false
+      editt = false;
     } else {
-      editt = true
+      editt = true;
     }
 
-
     if (trackStatus === 'not_started') {
-
       try {
         const url = `${API_BASE_URL}provider/startGrooming`;
         const response = await fetch(url, {
-          method: "POST",
-          headers: { 'Authorization': `Bearer ${userData.token}`, "Content-Type": "application/json" },
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${userData.token}`,
+            'Content-Type': 'application/json',
+          },
           body: JSON.stringify({
             booking_id: selectedBookingId,
             pet_id: selectedPetId,
-            action: 'in_progress'
+            action: 'in_progress',
           }),
         });
 
         const result = await response.json();
 
         if (result.status) {
-          navination.navigate('GroomingTracking', { item, edit: editt })
+          navination.navigate('GroomingTracking', { item, edit: editt });
 
           console.warn('result : ', result);
         } else {
@@ -406,74 +524,119 @@ const GroomingNewJobs = () => {
       } catch (error) {
         console.warn('Error :', error);
       }
-
     } else {
-      console.warn("ELSEEEEEEEEEE")
-      navination.navigate('GroomingTracking', { item, edit: editt })
+      console.warn('ELSEEEEEEEEEE');
+      navination.navigate('GroomingTracking', { item, edit: editt });
     }
-
-  }
+  };
 
   const renderItemmm = ({ item }) => (
-
     <View style={globle_Style.job_lst_con}>
       <View style={globle_Style.newjob_lst}>
         <View style={globle_Style.newjob_itm_lft}>
-          {item.image ? <Image source={{ uri: item.image }} style={{ width: 60, height: 60, borderRadius: 30 }} /> : <NewjobOne />}
+          {item.image ? (
+            <Image
+              source={{ uri: item.image }}
+              style={{ width: 60, height: 60, borderRadius: 30 }}
+            />
+          ) : (
+            <NewjobOne />
+          )}
         </View>
         <View style={globle_Style.newjob_itm_rgt}>
           <View style={globle_Style.newjob_txt_con}>
-            <View style={[globle_Style.newjob_txt_lft, globle_Style.actjob_lft]}>
+            <View
+              style={[globle_Style.newjob_txt_lft, globle_Style.actjob_lft]}
+            >
               <Text style={globle_Style.job_exp}>{item.name}</Text>
               <View style={globle_Style.job_distc}>
                 <View style={globle_Style.newjob_txt_rgt}>
                   <DistaneMap />
-                  <Text style={[globle_Style.distc_txt, { marginLeft: 6 }]}>{item.city}</Text>
+                  <Text style={[globle_Style.distc_txt, { marginLeft: 6 }]}>
+                    {item.city}
+                  </Text>
                 </View>
               </View>
             </View>
-
           </View>
         </View>
       </View>
       <View style={[globle_Style.newjob_btn, globle_Style.actjob_btn]}>
         <TouchableWithoutFeedback>
           <View style={globle_Style.walk_time}>
-            <Text style={globle_Style.walk_time_txt_strt}>Grooming {item.track_status}</Text>
+            <Text style={globle_Style.walk_time_txt_strt}>
+              Grooming {item.track_status}
+            </Text>
             {/* <Text style={[globle_Style.walk_time_txt_strt, globle_Style.walk_time_txt]}>{item.service_time}</Text> */}
           </View>
         </TouchableWithoutFeedback>
 
-        <TouchableWithoutFeedback onPress={() => { if (item.track_status == 'terminate') return; handleGrooming(item.booking_id, item.pet_id, item.track_status, item) }} >
-
-          <LinearGradient colors={['#FBAB51', '#FE8705']} start={{ x: 0, y: 1 }} style={[globle_Style.actjob_btn_lin, item.track_status != null && (item.track_status == 'terminate') ? { opacity: 0.5 } : { opacity: 1 }]}>
-            <Text style={[globle_Style.gbl_btn_two, globle_Style.newactjob_btn]}>{item.track_status == 'in_progress' || item.track_status == 'completed' || item.track_status == 'rejected' ? 'Update Grooming' : item.track_status == 'terminate' ? 'Terminated' : 'Start Grooming'}</Text>
+        <TouchableWithoutFeedback
+          onPress={() => {
+            if (item.track_status == 'terminate') return;
+            handleGrooming(
+              item.booking_id,
+              item.pet_id,
+              item.track_status,
+              item,
+            );
+          }}
+        >
+          <LinearGradient
+            colors={['#FBAB51', '#FE8705']}
+            start={{ x: 0, y: 1 }}
+            style={[
+              globle_Style.actjob_btn_lin,
+              item.track_status != null && item.track_status == 'terminate'
+                ? { opacity: 0.5 }
+                : { opacity: 1 },
+            ]}
+          >
+            <Text
+              style={[globle_Style.gbl_btn_two, globle_Style.newactjob_btn]}
+            >
+              {item.track_status == 'in_progress' ||
+              item.track_status == 'completed' ||
+              item.track_status == 'rejected'
+                ? 'Update Grooming'
+                : item.track_status == 'terminate'
+                ? 'Terminated'
+                : 'Start Grooming'}
+            </Text>
           </LinearGradient>
-
         </TouchableWithoutFeedback>
       </View>
     </View>
-  )
+  );
 
   const renderItemmmUpcoming = ({ item }) => (
-
     <View style={globle_Style.job_lst_con}>
       <View style={globle_Style.newjob_lst}>
         <View style={globle_Style.newjob_itm_lft}>
-          {item.image ? <Image source={{ uri: item.image }} style={{ width: 60, height: 60, borderRadius: 30 }} /> : <NewjobOne />}
+          {item.image ? (
+            <Image
+              source={{ uri: item.image }}
+              style={{ width: 60, height: 60, borderRadius: 30 }}
+            />
+          ) : (
+            <NewjobOne />
+          )}
         </View>
         <View style={globle_Style.newjob_itm_rgt}>
           <View style={globle_Style.newjob_txt_con}>
-            <View style={[globle_Style.newjob_txt_lft, globle_Style.actjob_lft]}>
+            <View
+              style={[globle_Style.newjob_txt_lft, globle_Style.actjob_lft]}
+            >
               <Text style={globle_Style.job_exp}>{item.name}</Text>
               <View style={globle_Style.job_distc}>
                 <View style={globle_Style.newjob_txt_rgt}>
                   <DistaneMap />
-                  <Text style={[globle_Style.distc_txt, { marginLeft: 6 }]}>{item.city}</Text>
+                  <Text style={[globle_Style.distc_txt, { marginLeft: 6 }]}>
+                    {item.city}
+                  </Text>
                 </View>
               </View>
             </View>
-
           </View>
         </View>
       </View>
@@ -494,45 +657,46 @@ const GroomingNewJobs = () => {
         </TouchableWithoutFeedback> */}
       </View>
     </View>
-  )
+  );
 
   const openMap = (latitude, longitude) => {
     const url = `https://www.google.com/maps?q=${latitude},${longitude}`;
 
     Linking.canOpenURL(url)
-      .then((supported) => {
+      .then(supported => {
         if (supported) {
           Linking.openURL(url);
         } else {
-          Alert.alert("Error", "Unable to open the map.");
+          Alert.alert('Error', 'Unable to open the map.');
         }
       })
-      .catch((err) => console.error("An error occurred", err));
+      .catch(err => console.error('An error occurred', err));
   };
 
   const manageRideApiCall = async (selectedBookingId, latitude, longitude) => {
-
-    console.warn("useerdata :: ", userData)
+    console.warn('useerdata :: ', userData);
 
     try {
       const url = `${API_BASE_URL}provider/manageRide`;
       const response = await fetch(url, {
-        method: "POST",
-        headers: { 'Authorization': `Bearer ${userData.token}`, "Content-Type": "application/json" },
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${userData.token}`,
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify({
           booking_id: selectedBookingId,
           provider_id: userData.id,
-          status: "start",
-          service_id: '2'
+          status: 'start',
+          service_id: '2',
         }),
       });
 
       const result = await response.json();
 
       if (result.status) {
-
         console.warn('result : ', result);
-        openMap(latitude, longitude)
+        openMap(latitude, longitude);
         // fetchActiveJobsApiData()
       } else {
         console.warn('result : ', result);
@@ -540,139 +704,152 @@ const GroomingNewJobs = () => {
     } catch (error) {
       console.warn('Error :', error);
     }
-  }
-
+  };
 
   const ActiveJobMyTabs = () => {
     return (
-      <Tab.Navigator screenOptions={{
-        tabBarActiveTintColor: '#000000',  // Active tab label and indicator color
-        tabBarInactiveTintColor: '#929292', // Inactive tab label color
+      <Tab.Navigator
+        screenOptions={{
+          tabBarActiveTintColor: '#000000', // Active tab label and indicator color
+          tabBarInactiveTintColor: '#929292', // Inactive tab label color
 
-        tabBarIndicatorStyle: {
-          backgroundColor: '#FCA33F', // Active tab indicator color
-          width: 105,
-          position: 'absolute',
-          bottom: 0,
-          left: '10%', // Position the indicator in the center
-        },
-      }}>
-        <Tab.Screen name="Today Jobs" component={TodayJobs} options={{ title: 'Today Jobs' }} />
-        <Tab.Screen name="Upcoming Jobs" component={UpcomingJobs} options={{ title: 'Upcoming Jobs' }} />
+          tabBarIndicatorStyle: {
+            backgroundColor: '#FCA33F', // Active tab indicator color
+            width: 105,
+            position: 'absolute',
+            bottom: 0,
+            left: '10%', // Position the indicator in the center
+          },
+        }}
+      >
+        <Tab.Screen
+          name="Today Jobs"
+          component={TodayJobs}
+          options={{ title: 'Today Jobs' }}
+        />
+        <Tab.Screen
+          name="Upcoming Jobs"
+          component={UpcomingJobs}
+          options={{ title: 'Upcoming Jobs' }}
+        />
       </Tab.Navigator>
     );
   };
 
-
   const TodayJobs = () => (
     <View style={globle_Style.container}>
-      {
-        todayActiveJob.length > 0 ?
-
-          isLoading ? (
-            <ActivityIndicator style={{
+      {todayActiveJob.length > 0 ? (
+        isLoading ? (
+          <ActivityIndicator
+            style={{
               flex: 1,
               justifyContent: 'center',
               alignItems: 'center',
-            }} size="large" color="#0000ff" />
-          ) : (
-
-
-            <View style={globle_Style.newjob_sec}>
-              <FlatList
-                data={todayActiveJob}
-                renderItem={renderItemActiveJobs}
-                keyExtractor={(item, index) => index.toString()} />
-
-            </View>
-
-          )
-          :
-          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <View style={{ marginBottom: 10 }}>
-              <Image source={require('../../assets/images/dogWalking.png')} />
-            </View>
-            <View>
-              <Text style={{
-                textAlign: 'center', fontSize: 20,
+            }}
+            size="large"
+            color="#0000ff"
+          />
+        ) : (
+          <View style={globle_Style.newjob_sec}>
+            <FlatList
+              data={todayActiveJob}
+              renderItem={renderItemActiveJobs}
+              keyExtractor={(item, index) => index.toString()}
+            />
+          </View>
+        )
+      ) : (
+        <View
+          style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
+        >
+          <View style={{ marginBottom: 10 }}>
+            <Image source={require('../../assets/images/dogWalking.png')} />
+          </View>
+          <View>
+            <Text
+              style={{
+                textAlign: 'center',
+                fontSize: 20,
                 fontWeight: '600',
                 lineHeight: 24.2,
                 fontFamily: 'Inter-SemiBold',
-                color: '#1D1D1D'
-              }}>No Active Jobs </Text>
-              {/* <Text  style={globle_style.wait_for_qua}>Your Request Submit Successfully</Text> */}
-            </View>
+                color: '#1D1D1D',
+              }}
+            >
+              No Active Jobs{' '}
+            </Text>
+            {/* <Text  style={globle_style.wait_for_qua}>Your Request Submit Successfully</Text> */}
           </View>
-      }
-
+        </View>
+      )}
     </View>
   );
 
   const UpcomingJobs = () => (
     <View style={globle_Style.container}>
-      {
-        upcomingActiveJob.length > 0 ?
-
-          isLoading ? (
-            <ActivityIndicator style={{
+      {upcomingActiveJob.length > 0 ? (
+        isLoading ? (
+          <ActivityIndicator
+            style={{
               flex: 1,
               justifyContent: 'center',
               alignItems: 'center',
-            }} size="large" color="#0000ff" />
-          ) : (
-
-
-            <View style={globle_Style.newjob_sec}>
-              <FlatList
-                data={upcomingActiveJob}
-                renderItem={renderItemActiveUpcoming}
-                keyExtractor={(item, index) => index.toString()} />
-
-            </View>
-
-          )
-          :
-          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <View style={{ marginBottom: 10 }}>
-              <Image source={require('../../assets/images/dogWalking.png')} />
-            </View>
-            <View>
-              <Text style={{
-                textAlign: 'center', fontSize: 20,
+            }}
+            size="large"
+            color="#0000ff"
+          />
+        ) : (
+          <View style={globle_Style.newjob_sec}>
+            <FlatList
+              data={upcomingActiveJob}
+              renderItem={renderItemActiveUpcoming}
+              keyExtractor={(item, index) => index.toString()}
+            />
+          </View>
+        )
+      ) : (
+        <View
+          style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
+        >
+          <View style={{ marginBottom: 10 }}>
+            <Image source={require('../../assets/images/dogWalking.png')} />
+          </View>
+          <View>
+            <Text
+              style={{
+                textAlign: 'center',
+                fontSize: 20,
                 fontWeight: '600',
                 lineHeight: 24.2,
                 fontFamily: 'Inter-SemiBold',
-                color: '#1D1D1D'
-              }}>No Upcoming Jobs </Text>
-              {/* <Text  style={globle_style.wait_for_qua}>Your Request Submit Successfully</Text> */}
-            </View>
+                color: '#1D1D1D',
+              }}
+            >
+              No Upcoming Jobs{' '}
+            </Text>
+            {/* <Text  style={globle_style.wait_for_qua}>Your Request Submit Successfully</Text> */}
           </View>
-      }
-
+        </View>
+      )}
     </View>
   );
 
-
-  const DeleteDialog = (quoteId) => {
-    Alert.alert("Delete", "Are you sure you want to delete?",
-      [
-        {
-          text: "Cancel",
-          style: "cancel"
+  const DeleteDialog = quoteId => {
+    Alert.alert('Delete', 'Are you sure you want to delete?', [
+      {
+        text: 'Cancel',
+        style: 'cancel',
+      },
+      {
+        text: 'Yes',
+        onPress: () => {
+          DeleteMyQuotesAPI(quoteId);
         },
-        {
-          text: "Yes",
-          onPress: () => {
-            DeleteMyQuotesAPI(quoteId)
-          }
-        }
-      ]
-    );
-  }
-  const DeleteMyQuotesAPI = async (quoteId) => {
-
-
-    let userData = ""
+      },
+    ]);
+  };
+  const DeleteMyQuotesAPI = async quoteId => {
+    let userData = '';
     const userDataString = await AsyncStorage.getItem('userData');
     if (userDataString) {
       userData = JSON.parse(userDataString);
@@ -682,136 +859,142 @@ const GroomingNewJobs = () => {
 
     const data = {
       quotation_id: quoteId,
-      provider_id: userData.id
-    }
+      provider_id: userData.id,
+    };
 
-    console.warn("DATAAAAfsfsfsfs :: ", data)
-
+    console.warn('DATAAAAfsfsfsfs :: ', data);
 
     try {
       const response = await fetch(url, {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${userData.token}`,
-          'Content-Type': 'application/json'
+          Authorization: `Bearer ${userData.token}`,
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           quotation_id: quoteId,
-          provider_id: userData.id
-        })
+          provider_id: userData.id,
+        }),
       });
       const result = await response.json();
 
       if (result.status) {
         console.warn(result);
-        fetchNewJobsApiData()
+        fetchNewJobsApiData();
         fetchMyQuoteApiData();
         // setProfile({ url: result.data.profile, base64: null });
         // setIsLoading(false)
-
       } else {
-        console.warn("ELSEEE :: ", result);
+        console.warn('ELSEEE :: ', result);
       }
     } catch (error) {
       console.warn('Network request failed :: ', error);
     }
-  }
-
+  };
 
   const renderItemActiveJobs = ({ item }) => (
-
-    <View style={[globle_Style.active_servc_sec,]}>
+    <View style={[globle_Style.active_servc_sec]}>
       <View style={globle_Style.serv_walk_act}>
-        <FlatList
-          data={item.pets}
-          renderItem={renderItemmm}
-        />
+        <FlatList data={item.pets} renderItem={renderItemmm} />
       </View>
       <View style={globle_Style.act_serv_exted}>
         <View style={globle_Style.actv_serv_rgt}>
-          <TouchableWithoutFeedback onPress={() => navination.navigate('GroomingActiveJobDetail', { item: item })}>
+          <TouchableWithoutFeedback
+            onPress={() =>
+              navination.navigate('GroomingActiveJobDetail', { item: item })
+            }
+          >
             <View style={globle_Style.call_menu}>
               <Text style={[globle_Style.view_all]}>View Details</Text>
             </View>
           </TouchableWithoutFeedback>
-          <TouchableWithoutFeedback onPress={() => manageRideApiCall(item.booking_id, item.latitude, item.longitude)}>
+          <TouchableWithoutFeedback
+            onPress={() =>
+              manageRideApiCall(item.booking_id, item.latitude, item.longitude)
+            }
+          >
             {/* <TouchableWithoutFeedback onPress={() => manageRideApiCall(item.booking_id)}> */}
-            <Text style={[globle_Style.actv_track_btn,]}>Start Ride</Text>
+            <Text style={[globle_Style.actv_track_btn]}>Start Ride</Text>
           </TouchableWithoutFeedback>
         </View>
       </View>
     </View>
-  )
+  );
 
   const renderItemActiveUpcoming = ({ item }) => (
-
-    <View style={[globle_Style.active_servc_sec,]}>
+    <View style={[globle_Style.active_servc_sec]}>
       <View style={globle_Style.serv_walk_act}>
-        <FlatList
-          data={item.pets}
-          renderItem={renderItemmmUpcoming}
-        />
+        <FlatList data={item.pets} renderItem={renderItemmmUpcoming} />
       </View>
       <View style={globle_Style.act_serv_exted}>
         <View style={globle_Style.actv_serv_rgt}>
-          <TouchableWithoutFeedback onPress={() => navination.navigate('ActiveJobDetail', { item: item })}>
+          <TouchableWithoutFeedback
+            onPress={() =>
+              navination.navigate('ActiveJobDetail', { item: item })
+            }
+          >
             <View style={globle_Style.call_menu}>
               <Text style={[globle_Style.view_all]}>View Details</Text>
             </View>
           </TouchableWithoutFeedback>
-          <TouchableWithoutFeedback >
+          <TouchableWithoutFeedback>
             {/* {/* <TouchableWithoutFeedback onPress={() => manageRideApiCall(item.booking_id)}> */}
-            <Text style={[]}>Start Date : {formatDate(item.service_start_date)}</Text>
+            <Text style={[]}>
+              Start Date : {formatDate(item.service_start_date)}
+            </Text>
           </TouchableWithoutFeedback>
         </View>
       </View>
     </View>
-  )
+  );
 
   const WalkNewJobs = () => {
     return (
       <View style={globle_Style.container}>
-
-        {
-          newJobData.length > 0 ?
-
-            isLoading ? (
-              <ActivityIndicator style={{
+        {newJobData.length > 0 ? (
+          isLoading ? (
+            <ActivityIndicator
+              style={{
                 flex: 1,
                 justifyContent: 'center',
                 alignItems: 'center',
-              }} size="large" color="#0000ff" />
-            ) : (
-
-
-              <View style={globle_Style.newjobs_tab}>
-                <FlatList
-                  data={newJobData}
-                  renderItem={renderItemNewJobs}
-                  keyExtractor={(item, index) => index.toString()} />
-              </View>
-
-            )
-
-            :
-
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-              <View style={{ marginBottom: 10 }}>
-                <Image source={require('../../assets/images/dogWalking.png')} />
-              </View>
-              <View>
-                <Text style={{
-                  textAlign: 'center', fontSize: 20,
+              }}
+              size="large"
+              color="#0000ff"
+            />
+          ) : (
+            <View style={globle_Style.newjobs_tab}>
+              <FlatList
+                data={newJobData}
+                renderItem={renderItemNewJobs}
+                keyExtractor={(item, index) => index.toString()}
+              />
+            </View>
+          )
+        ) : (
+          <View
+            style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
+          >
+            <View style={{ marginBottom: 10 }}>
+              <Image source={require('../../assets/images/dogWalking.png')} />
+            </View>
+            <View>
+              <Text
+                style={{
+                  textAlign: 'center',
+                  fontSize: 20,
                   fontWeight: '600',
                   lineHeight: 24.2,
                   fontFamily: 'Inter-SemiBold',
-                  color: '#1D1D1D'
-                }}>No New Jobs</Text>
-                {/* <Text  style={globle_style.wait_for_qua}>Your Request Submit Successfully</Text> */}
-              </View>
+                  color: '#1D1D1D',
+                }}
+              >
+                No New Jobs
+              </Text>
+              {/* <Text  style={globle_style.wait_for_qua}>Your Request Submit Successfully</Text> */}
             </View>
-        }
-
+          </View>
+        )}
       </View>
     );
   };
@@ -819,53 +1002,56 @@ const GroomingNewJobs = () => {
   const MyQuotesTab = () => {
     return (
       <View style={globle_Style.container}>
-        {
-          myQuoteData.length > 0 ?
-
-            isLoading ? (
-              <ActivityIndicator style={{
+        {myQuoteData.length > 0 ? (
+          isLoading ? (
+            <ActivityIndicator
+              style={{
                 // flex: 1,
                 justifyContent: 'center',
                 alignItems: 'center',
-              }} size="large" color="#0000ff" />
-            ) : (
-
-
-              <View style={[globle_Style.newjob_sec, { paddingHorizontal: 0 }]}>
-                <FlatList
-                  data={myQuoteData}
-                  renderItem={renderItemMyQuotes}
-                  keyExtractor={(item, index) => index.toString()} />
-              </View>
-
-            )
-
-
-            :
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-              <View style={{ marginBottom: 10 }}>
-                <Image source={require('../../assets/images/dogWalking.png')} />
-              </View>
-              <View>
-                <Text style={{
-                  textAlign: 'center', fontSize: 20,
+              }}
+              size="large"
+              color="#0000ff"
+            />
+          ) : (
+            <View style={[globle_Style.newjob_sec, { paddingHorizontal: 0 }]}>
+              <FlatList
+                data={myQuoteData}
+                renderItem={renderItemMyQuotes}
+                keyExtractor={(item, index) => index.toString()}
+              />
+            </View>
+          )
+        ) : (
+          <View
+            style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
+          >
+            <View style={{ marginBottom: 10 }}>
+              <Image source={require('../../assets/images/dogWalking.png')} />
+            </View>
+            <View>
+              <Text
+                style={{
+                  textAlign: 'center',
+                  fontSize: 20,
                   fontWeight: '600',
                   lineHeight: 24.2,
                   fontFamily: 'Inter-SemiBold',
-                  color: '#1D1D1D'
-                }}>No Quotes </Text>
-                {/* <Text  style={globle_style.wait_for_qua}>Your Request Submit Successfully</Text> */}
-              </View>
+                  color: '#1D1D1D',
+                }}
+              >
+                No Quotes{' '}
+              </Text>
+              {/* <Text  style={globle_style.wait_for_qua}>Your Request Submit Successfully</Text> */}
             </View>
-        }
-
+          </View>
+        )}
       </View>
     );
   };
 
   const ActiveJobsTab = () => {
     return (
-
       <View style={{ flex: 1, backgroundColor: '#fff' }}>
         <ActiveJobMyTabs />
       </View>
@@ -880,7 +1066,6 @@ const GroomingNewJobs = () => {
       //           alignItems: 'center',
       //         }} size="large" color="#0000ff" />
       //       ) : (
-
 
       //         <View style={globle_Style.newjob_sec}>
       //           <FlatList
@@ -913,10 +1098,10 @@ const GroomingNewJobs = () => {
     );
   };
 
-
   const MyTabs = () => {
     return (
-      <Tab.Navigator tabBar={props => <CustomTabBar {...props} />}
+      <Tab.Navigator
+        tabBar={props => <CustomTabBar {...props} />}
         screenOptions={{
           tabBarStyle: {
             shadowRadius: 0,
@@ -934,7 +1119,7 @@ const GroomingNewJobs = () => {
             backgroundColor: '#fff',
             lineHeight: 44,
             borderRadius: 47,
-            width: 100
+            width: 100,
           },
           tabBarItemStyle: {
             padding: 0, // Remove padding for each tab item
@@ -942,57 +1127,59 @@ const GroomingNewJobs = () => {
           tabBarActiveTintColor: '#1D1D1D',
           tabBarInactiveTintColor: '#fff',
           tabBarActiveBackgroundColor: '#4a90e2',
-          tabBarInactiveBackgroundColor: '#FFFFFF33'
-        }}>
-
-        <Tab.Screen name='New Jobs' component={WalkNewJobs} />
-        <Tab.Screen name='My Quotes' component={MyQuotesTab} />
-        <Tab.Screen name='Active' component={ActiveJobsTab} />
+          tabBarInactiveBackgroundColor: '#FFFFFF33',
+        }}
+      >
+        <Tab.Screen name="New Jobs" component={WalkNewJobs} />
+        <Tab.Screen name="My Quotes" component={MyQuotesTab} />
+        <Tab.Screen name="Active" component={ActiveJobsTab} />
       </Tab.Navigator>
     );
   };
 
   const handleTimeSelection = (index, time) => {
+    setselectedRadio(index);
+    setSelectedActiveTime(time);
+  };
 
-    setselectedRadio(index)
-    setSelectedActiveTime(time)
-
-  }
-
-  const handleManageEndWalk = async (selectedTime, selectedBookingId, selectedPetId) => {
+  const handleManageEndWalk = async (
+    selectedTime,
+    selectedBookingId,
+    selectedPetId,
+  ) => {
     try {
       const url = `${API_BASE_URL}provider/manageWalk`;
       const response = await fetch(url, {
-        method: "POST",
-        headers: { 'Authorization': `Bearer ${userData.token}`, "Content-Type": "application/json" },
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${userData.token}`,
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify({
           booking_id: selectedBookingId,
           provider_id: userData.id,
           pet_id: selectedPetId,
           service_time: selectedTime,
-          action: 'end'
+          action: 'end',
         }),
       });
 
       const result = await response.json();
 
       if (result.status) {
-
         console.warn('result : ', result);
-        fetchActiveJobsApiData()
+        fetchActiveJobsApiData();
       } else {
         console.warn('result : ', result);
       }
     } catch (error) {
       console.warn('Error :', error);
     }
-
-  }
-
+  };
 
   const appendBookingDetails = (booking_id, service_time) => {
     // Get today's date in the desired format
-    const todaysDate = moment().format("YYYY-MM-DD");
+    const todaysDate = moment().format('YYYY-MM-DD');
 
     // Combine the details
     const appendedString = `${booking_id}_${service_time.trim()}_${todaysDate}`;
@@ -1001,16 +1188,18 @@ const GroomingNewJobs = () => {
   };
 
   const manageStartWalkApiCall = async () => {
-
     const data = {
       booking_id: selectedActiveBookingId,
       provider_id: userData.id,
       pet_id: selectedActivePetId,
       service_time: selectedActiveTime,
-      action: 'start'
+      action: 'start',
     };
 
-    console.warn('datadatadata : ', appendBookingDetails(selectedActiveBookingId, selectedActiveTime));
+    console.warn(
+      'datadatadata : ',
+      appendBookingDetails(selectedActiveBookingId, selectedActiveTime),
+    );
     // setEditDetail(false)
     // navination.navigate('WalkTracking', { uniqueKey1: appendBookingDetails(selectedActiveBookingId, selectedActiveTime), data: data });
     // return;
@@ -1018,52 +1207,61 @@ const GroomingNewJobs = () => {
     try {
       const url = `${API_BASE_URL}provider/manageWalk`;
       const response = await fetch(url, {
-        method: "POST",
-        headers: { 'Authorization': `Bearer ${userData.token}`, "Content-Type": "application/json" },
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${userData.token}`,
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify({
           booking_id: selectedActiveBookingId,
           provider_id: userData.id,
           pet_id: selectedActivePetId,
           service_time: selectedActiveTime,
-          action: 'start'
+          action: 'start',
         }),
       });
 
       const result = await response.json();
 
       if (result.status) {
-
         console.warn('result : ', result);
 
-        navination.navigate('WalkTracking', { uniqueKey1: appendBookingDetails(selectedActiveBookingId, selectedActiveTime), data: data, walk_duration: todayActiveJob.walk_duration });
+        navination.navigate('WalkTracking', {
+          uniqueKey1: appendBookingDetails(
+            selectedActiveBookingId,
+            selectedActiveTime,
+          ),
+          data: data,
+          walk_duration: todayActiveJob.walk_duration,
+        });
 
-        fetchActiveJobsApiData()
+        fetchActiveJobsApiData();
 
-        setEditDetail(false)
+        setEditDetail(false);
       } else {
         console.warn('result : ', result);
       }
     } catch (error) {
       console.warn('Error :', error);
     }
-  }
+  };
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <NavigationContainer independent={true}>
-        <View style={styles.container}>
-          <MyTabs />
-        </View>
-      </NavigationContainer>
+      <View style={styles.container}>
+        <MyTabs />
+      </View>
 
       {/* start popup  */}
 
-      <Modal animationType="slide"
+      <Modal
+        animationType="slide"
         transparent={true}
         visible={editDetail}
         onRequestClose={() => {
           setEditDetail(!editDetail);
-        }}>
+        }}
+      >
         <View style={globle_Style.popup}>
           <View style={[globle_Style.overlay]}>
             <View style={[globle_Style.detail_pop]}>
@@ -1073,22 +1271,47 @@ const GroomingNewJobs = () => {
                     <ClosePopup />
                   </View>
                 </TouchableWithoutFeedback>
-
               </View>
               <View style={globle_Style.form_info}>
                 {/* radio btn : */}
                 <View style={[globle_Style.radio_con, globle_Style.serv_radio]}>
                   {selectedActiveJobTime.map((time, index) => (
                     <View key={index} style={globle_Style.serv_rad_wrapp}>
-                      <TouchableWithoutFeedback onPress={() => handleTimeSelection(index + 1, time)}>
-                        <View style={[globle_Style.radioWapper, selectRadio === index + 1 ? globle_Style.active_wrapper : globle_Style.radioWapper]}>
+                      <TouchableWithoutFeedback
+                        onPress={() => handleTimeSelection(index + 1, time)}
+                      >
+                        <View
+                          style={[
+                            globle_Style.radioWapper,
+                            selectRadio === index + 1
+                              ? globle_Style.active_wrapper
+                              : globle_Style.radioWapper,
+                          ]}
+                        >
                           <View style={globle_Style.serv_chos_con}>
                             <Clockwalk style={{ marginRight: 11.5 }} />
-                            <Text style={[globle_Style.rdo_txt, globle_Style.clock_txt]}>{time}</Text>
+                            <Text
+                              style={[
+                                globle_Style.rdo_txt,
+                                globle_Style.clock_txt,
+                              ]}
+                            >
+                              {time}
+                            </Text>
                           </View>
 
-                          <View style={[globle_Style.static_radio_circle, globle_Style.radio_static, selectRadio === index + 1 ? globle_Style.static_radio_circle : globle_Style.radio_static]}>
-                            {selectRadio === index + 1 ? <View style={globle_Style.radio_bg}></View> : null}
+                          <View
+                            style={[
+                              globle_Style.static_radio_circle,
+                              globle_Style.radio_static,
+                              selectRadio === index + 1
+                                ? globle_Style.static_radio_circle
+                                : globle_Style.radio_static,
+                            ]}
+                          >
+                            {selectRadio === index + 1 ? (
+                              <View style={globle_Style.radio_bg}></View>
+                            ) : null}
                           </View>
                         </View>
                       </TouchableWithoutFeedback>
@@ -1096,8 +1319,15 @@ const GroomingNewJobs = () => {
                   ))}
                 </View>
               </View>
-              <TouchableOpacity style={globle_Style.popup_btn} onPress={() => manageStartWalkApiCall()}>
-                <LinearGradient colors={['#FBAB51', '#FE8705']} start={{ x: 0, y: 1 }} style={globle_Style.globle_btn}>
+              <TouchableOpacity
+                style={globle_Style.popup_btn}
+                onPress={() => manageStartWalkApiCall()}
+              >
+                <LinearGradient
+                  colors={['#FBAB51', '#FE8705']}
+                  start={{ x: 0, y: 1 }}
+                  style={globle_Style.globle_btn}
+                >
                   <Text style={globle_Style.gbl_btn}>Proceed</Text>
                 </LinearGradient>
               </TouchableOpacity>
@@ -1113,19 +1343,15 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
   const { colors } = useTheme();
 
   return (
-    <LinearGradient
-      colors={['#FBAB51', '#FE8705']}
-      style={styles.tabBar}
-    >
-
+    <LinearGradient colors={['#FBAB51', '#FE8705']} style={styles.tabBar}>
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
         const label =
           options.tabBarLabel !== undefined
             ? options.tabBarLabel
             : options.title !== undefined
-              ? options.title
-              : route.name;
+            ? options.title
+            : route.name;
 
         const isFocused = state.index === index;
 
@@ -1148,10 +1374,7 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
             accessibilityState={isFocused ? { selected: true } : {}}
             accessibilityLabel={label}
             onPress={onPress}
-            style={[
-              styles.tab,
-              isFocused && styles.activeTab,
-            ]}
+            style={[styles.tab, isFocused && styles.activeTab]}
           >
             <Text
               style={[
@@ -1181,7 +1404,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FBAB51', // Background color of the tab bar
     borderRadius: 66,
     marginHorizontal: 12,
-    paddingHorizontal: 7
+    paddingHorizontal: 7,
   },
   tab: {
     flex: 1,
@@ -1220,14 +1443,5 @@ const styles = StyleSheet.create({
     paddingTop: 20,
   },
 });
-
-
-
-
-
-
-
-
-
 
 export default GroomingNewJobs;

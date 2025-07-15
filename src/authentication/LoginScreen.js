@@ -103,6 +103,7 @@ const LoginScreen = ({ navigation }) => {
 
     setIsDisable(true);
     try {
+      console.log('first');
       const url = `${API_BASE_URL}provider/login`;
       const response = await fetch(url, {
         method: 'POST',
@@ -115,6 +116,7 @@ const LoginScreen = ({ navigation }) => {
       });
 
       const result = await response.json();
+      console.log(result);
 
       if (result.status) {
         setIsDisable(false);

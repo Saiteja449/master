@@ -151,7 +151,7 @@ const SplashScreen = ({ navigation }) => {
     console.warn('USERDATAAAAA ::: ', userData);
 
     const localVersionName = DeviceInfo.getVersion();
-
+    console.log(localVersionName, fireStoreVersion);
     if (localVersionName !== fireStoreVersion) {
       setUpdatePopup(true);
     } else {

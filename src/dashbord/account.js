@@ -97,32 +97,30 @@ const AccountScreens = () => {
     Linking.openURL(url);
   };
 
-  // const handleLogout = () => {
-  //   Alert.alert("Logout", "Are you sure you want to logout?",
-  //     [
-  //       {
-  //         text: "Cancel",
-  //         style: "cancel"
-  //       },
-  //       {
-  //         text: "OK",
-  //         onPress: () => {
-  //           // Add your logout logic here
-  //           // navigation.dispatch(
-  //           //     CommonActions.reset({
-  //           //         index: 0,
-  //           //         routes: [{ name: 'LoginScreen' }], // Navigate back to the Splash Screen
-  //           //     })
-  //           // );
+  const handleLogout = () => {
+    Alert.alert('Logout', 'Are you sure you want to logout?', [
+      {
+        text: 'Cancel',
+        style: 'cancel',
+      },
+      {
+        text: 'OK',
+        onPress: () => {
+          // Add your logout logic here
+          // navigation.dispatch(
+          //     CommonActions.reset({
+          //         index: 0,
+          //         routes: [{ name: 'LoginScreen' }], // Navigate back to the Splash Screen
+          //     })
+          // );
 
-  //           clearUserData()
+          clearUserData();
 
-  //           RNRestart.Restart();
-  //         }
-  //       }
-  //     ]
-  //   );
-  // };
+          // RNRestart.Restart();
+        },
+      },
+    ]);
+  };
 
   return (
     <ScrollView style={globle_Style.container}>
