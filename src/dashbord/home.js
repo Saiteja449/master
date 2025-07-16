@@ -41,7 +41,7 @@ import DownPopup from '../../assets/images/down_popup.svg';
 import Extenservc from '../../assets/images/exten_servc.svg';
 import Inactive from '../../assets/images/inactice.svg';
 import LinearGradient from 'react-native-linear-gradient';
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { CommonActions, useFocusEffect, useNavigation } from '@react-navigation/native';
 import Slider from '@react-native-community/slider';
 import { API_BASE_URL } from '../constants/constant';
 import { UserContext } from '../common/AppContext';
@@ -261,6 +261,12 @@ const Home = ({ route }) => {
         setIsLoading(false);
       } else if (result.status == 401) {
         clearUserData();
+        navigation.dispatch(
+          CommonActions.reset({
+            index: 0,
+            routes: [{ name: 'SplashScreen' }], // Navigate back to the Splash Screen
+          }),
+        );
         // RNRestart.Restart();
       } else {
         console.warn('ELSEEE :: ', result);
