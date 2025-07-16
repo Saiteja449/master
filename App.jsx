@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Text, View, Image, StyleSheet } from 'react-native';
+import { Text, View, Image, StyleSheet, SafeAreaView } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { CommonActions, NavigationContainer } from '@react-navigation/native';
 import loginScreen from './src/authentication/LoginScreen.js';
@@ -610,110 +610,112 @@ const App = () => {
   );
 
   return (
-    <AppContext>
-      <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={{
-            headerTitleAlign: 'center',
-            headerTitleStyle: {
-              fontSize: 16,
-              fontWeight: '600',
-              fontFamily: 'Inter-SemiBold',
-            },
-            headerStyle: {
-              backgroundColor: '#fff',
-            },
-          }}
-          initialRouteName="SplashScreen"
-        >
-          <Stack.Screen name="Log In or Sign Up" component={loginScreen} />
-          <Stack.Screen
-            name="SplashScreen"
-            component={SplashScreen}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen name="Confirm Your Number" component={OtpVerify} />
-          <Stack.Screen name="Personal Details" component={PersonalDetails} />
-          <Stack.Screen
-            name="AddAddress"
-            component={AddAddress}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name="AddressSearch"
-            component={AddressSearch}
-            options={{
+    <SafeAreaView style={{ flex: 1 }}>
+      <AppContext>
+        <NavigationContainer>
+          <Stack.Navigator
+            screenOptions={{
               headerTitleAlign: 'center',
-              title: 'Search Location',
+              headerTitleStyle: {
+                fontSize: 16,
+                fontWeight: '600',
+                fontFamily: 'Inter-SemiBold',
+              },
+              headerStyle: {
+                backgroundColor: '#fff',
+              },
             }}
-          />
-          <Stack.Screen
-            name="AddAddressDetail"
-            component={AddAddressDetail}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name="Select Services"
-            component={SelectServiceScreens}
-          />
-          <Stack.Screen name="Verify ID" component={VerifyId} />
-          <Stack.Screen
-            name="Confirm Your Numbers"
-            component={ConfirmNumber}
-            options={{
-              title: 'Verify OTP',
-            }}
-          />
-          <Stack.Screen name="Service Detail" component={ServiceDetail} />
-          <Stack.Screen
-            name="DashboardScreen"
-            component={TabNavigations}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name="AddressScreen"
-            component={AddressScreen}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name="Service Detail Grooming"
-            component={ServiceDetailGrooming}
-          />
-          <Stack.Screen
-            name="Service Detail Training"
-            component={ServiceDetailTraning}
-          />
-          <Stack.Screen
-            name="Service Detail Boarding"
-            component={ServiceDetailBoarding}
-          />
-          <Stack.Screen
-            name="DummyScreen"
-            component={DummyScreen}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name="WalkTrackingg"
-            component={WalkTracking}
-            options={{
-              headerShown: false,
-            }}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </AppContext>
+            initialRouteName="SplashScreen"
+          >
+            <Stack.Screen name="Log In or Sign Up" component={loginScreen} />
+            <Stack.Screen
+              name="SplashScreen"
+              component={SplashScreen}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen name="Confirm Your Number" component={OtpVerify} />
+            <Stack.Screen name="Personal Details" component={PersonalDetails} />
+            <Stack.Screen
+              name="AddAddress"
+              component={AddAddress}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="AddressSearch"
+              component={AddressSearch}
+              options={{
+                headerTitleAlign: 'center',
+                title: 'Search Location',
+              }}
+            />
+            <Stack.Screen
+              name="AddAddressDetail"
+              component={AddAddressDetail}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="Select Services"
+              component={SelectServiceScreens}
+            />
+            <Stack.Screen name="Verify ID" component={VerifyId} />
+            <Stack.Screen
+              name="Confirm Your Numbers"
+              component={ConfirmNumber}
+              options={{
+                title: 'Verify OTP',
+              }}
+            />
+            <Stack.Screen name="Service Detail" component={ServiceDetail} />
+            <Stack.Screen
+              name="DashboardScreen"
+              component={TabNavigations}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="AddressScreen"
+              component={AddressScreen}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="Service Detail Grooming"
+              component={ServiceDetailGrooming}
+            />
+            <Stack.Screen
+              name="Service Detail Training"
+              component={ServiceDetailTraning}
+            />
+            <Stack.Screen
+              name="Service Detail Boarding"
+              component={ServiceDetailBoarding}
+            />
+            <Stack.Screen
+              name="DummyScreen"
+              component={DummyScreen}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="WalkTrackingg"
+              component={WalkTracking}
+              options={{
+                headerShown: false,
+              }}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </AppContext>
+    </SafeAreaView>
   );
 };
 
