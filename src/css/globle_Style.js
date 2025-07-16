@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 
 export default globle_Style = StyleSheet.create({
   // globle style
@@ -44,17 +44,31 @@ export default globle_Style = StyleSheet.create({
     marginBottom: 12,
     paddingLeft: 3,
   },
+  // input_txt: {
+  //   fontSize: 14,
+  //   fontWeight: '500',
+  //   fontFamily: 'Inter-Medium',
+  //   lineHeight: 19.94,
+  //   color: '#979797',
+  //   paddingHorizontal: 16,
+  //   borderWidth: 1.2,
+  //   borderColor: '#0000001A',
+  //   borderRadius: 12,
+  //   width: '100%',
+  // },
   input_txt: {
     fontSize: 14,
     fontWeight: '500',
-    fontFamily: 'Inter-Medium',
+    fontFamily: Platform.OS === 'ios' ? 'Inter-Medium' : 'Inter-Medium', // Explicit platform fonts
     lineHeight: 19.94,
     color: '#979797',
     paddingHorizontal: 16,
-    borderWidth: 1.2,
+    borderWidth: Platform.OS === 'ios' ? 0.8 : 1.2, // Thinner border on iOS
     borderColor: '#0000001A',
     borderRadius: 12,
     width: '100%',
+    paddingVertical: Platform.OS === 'ios' ? 12 : 10, // Adjust vertical padding
+    backgroundColor: Platform.OS === 'ios' ? '#FFFFFF' : undefined, // Explicit bg for iOS
   },
   container: {
     flex: 1,
@@ -2216,7 +2230,11 @@ export default globle_Style = StyleSheet.create({
 
   // ==============wallet screen start ======================
   wallet_sec: {
-    paddingVertical: 20,
+    // paddingVertical: 20,
+    // paddingHorizontal: 16,
+  },
+  wallet_trans:{
+     paddingVertical: 20,
     paddingHorizontal: 16,
   },
   wallet_grad: {

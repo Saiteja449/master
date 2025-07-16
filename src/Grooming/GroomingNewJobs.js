@@ -222,14 +222,18 @@ const GroomingNewJobs = () => {
               }
             >
               <View style={[globle_Style.newjob_btn_con]}>
-                <LinearGradient
-                  colors={['#FBAB51', '#FE8705']}
-                  start={{ x: 0, y: 1 }}
-                  style={[globle_Style.gbl_btn_two]}
+              <LinearGradient
+                colors={['#FBAB51', '#FE8705']}
+                start={{ x: 0, y: 1 }}
+                style={[globle_Style.gbl_btn_two, { paddingHorizontal: 0 }]}
+              >
+                <Text
+                  style={[globle_Style.gbl_btn_two, { marginHorizontal: 12 }]}
                 >
-                  <Text style={globle_Style.gbl_btn_two}>Offer Now</Text>
-                </LinearGradient>
-              </View>
+                  Offer Now
+                </Text>
+              </LinearGradient>
+            </View>
             </TouchableOpacity>
           </View>
         </View>

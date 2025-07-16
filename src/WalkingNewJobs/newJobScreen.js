@@ -226,9 +226,13 @@ const NewJobs = () => {
               <LinearGradient
                 colors={['#FBAB51', '#FE8705']}
                 start={{ x: 0, y: 1 }}
-                style={[globle_Style.gbl_btn_two]}
+                style={[globle_Style.gbl_btn_two, { paddingHorizontal: 0 }]}
               >
-                <Text style={globle_Style.gbl_btn_two}>Offer Now</Text>
+                <Text
+                  style={[globle_Style.gbl_btn_two, { marginHorizontal: 12 }]}
+                >
+                  Offer Now
+                </Text>
               </LinearGradient>
             </View>
           </TouchableOpacity>
