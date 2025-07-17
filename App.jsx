@@ -76,6 +76,9 @@ import PrivacyPolicy from './src/WebView/PrivacyPolicy.js';
 import MessageScreens from './src/dashbord/Message.js';
 import MessageChat from './src/messageChat/messageChat.js';
 import EmailOtpVerify from './src/accountSubScreen/verifyEmailOtp.js';
+import ServiceDetailHome from './src/addServicesDeatils/service_details.js';
+import ServiceDetailGroomingHome from './src/addServicesDeatils/grooming_service_details.js';
+import ServiceDetailTraningHome from './src/addServicesDeatils/Training_service_details.js';
 const App = () => {
   const Stack = createNativeStackNavigator();
   const Tab = createBottomTabNavigator();
@@ -147,6 +150,7 @@ const App = () => {
   //   );
   // };
   const HomeNavigations = () => (
+    <AppContext>
       <Stack.Navigator
         screenOptions={{
           headerTitleAlign: 'center',
@@ -197,13 +201,13 @@ const App = () => {
         />
         <Stack.Screen
           name="Service Detail Grooming"
-          component={ServiceDetailGrooming}
+          component={ServiceDetailGroomingHome}
         />
         <Stack.Screen
           name="Service Detail Traning"
-          component={ServiceDetailTraning}
+          component={ServiceDetailTraningHome}
         />
-        <Stack.Screen name="Service Detail" component={ServiceDetail} />
+        <Stack.Screen name="Service Detail" component={ServiceDetailHome} />
         <Stack.Screen name="Wallet" component={WalletScreen} />
         <Stack.Screen
           name="Bank Details"
@@ -249,11 +253,11 @@ const App = () => {
           component={EmailVerification}
           options={{ title: 'Email Verification' }}
         />
-        {/* <Stack.Screen
+        <Stack.Screen
           name="EmailVerificationopt"
-          component={EmailVerificationOtp}
+          component={EmailOtpVerify}
           options={{ title: 'Verifiy OTP' }}
-        /> */}
+        />
         <Stack.Screen
           name="CertificateScreen"
           component={CertificateScreen}
@@ -384,6 +388,7 @@ const App = () => {
           }}
         />
       </Stack.Navigator>
+    </AppContext>
   );
 
   const TabNavigations = () => (

@@ -15,7 +15,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 
-const ServiceDetailGrooming = ({ route }) => {
+const ServiceDetailGroomingHome = ({ route }) => {
 
     const navigation = useNavigation()
 
@@ -819,4 +819,4 @@ const ServiceDetailGrooming = ({ route }) => {
 
 
 
-export default ServiceDetailGrooming;
+export default ServiceDetailGroomingHome;

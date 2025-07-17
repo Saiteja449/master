@@ -1223,6 +1223,13 @@ export default globle_Style = StyleSheet.create({
     fontFamily: 'Inter-Medium',
     fontWeight: '500',
     borderRadius: 8,
+
+  // iOS specific fixes
+  ...(Platform.OS === 'ios' && {
+    paddingVertical: 12, // Add vertical padding for iOS
+    textAlignVertical: 'center', // Center text vertically
+  }),
+  
   },
   pakg_totl_amt: {
     paddingTop: 19,

@@ -19,6 +19,7 @@ import Other from '../../assets/images/other.svg'
 import ClosePopup from '../../assets/images/close_popup.svg'
 import LinearGradient from 'react-native-linear-gradient';
 import BackgroundTimer from 'react-native-background-timer';
+import { request, RESULTS } from 'react-native-permissions';
 
 const WalkTracking = ({ route }) => {
     const [origin, setOrigin] = useState(null); // Starting point
@@ -116,13 +117,16 @@ const WalkTracking = ({ route }) => {
     const originInit = async () => {
         const requestLocationPermission = async () => {
             if (Platform.OS === 'android') {
-                const granted = await PermissionsAndroid.request(
-                    PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
-                );
-                return granted === PermissionsAndroid.RESULTS.GRANTED;
+              const granted = await PermissionsAndroid.request(
+                PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
+              );
+              return granted === PermissionsAndroid.RESULTS.GRANTED;
+            } else if (Platform.OS === 'ios') {
+              const result = await request(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE);
+              return result === RESULTS.GRANTED;
             }
-            return true;
-        };
+            return false;
+          };
 
         const permissionGranted = await requestLocationPermission();
         if (!permissionGranted) {

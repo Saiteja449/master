@@ -15,7 +15,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 
-const ServiceDetail = ({ route }) => {
+const ServiceDetailHome = ({ route }) => {
   const navigation = useNavigation();
 
   const toggleCheckbox = () => setChecked(!checked);
@@ -754,4 +754,4 @@ const ServiceDetail = ({ route }) => {
 
 
 
-export default ServiceDetail;
+export default ServiceDetailHome;

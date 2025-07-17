@@ -15,7 +15,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 
-const ServiceDetailTraning = ({ route }) => {
+const ServiceDetailTraningHome = ({ route }) => {
 
     const navigation = useNavigation()
 
@@ -1175,4 +1175,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default ServiceDetailTraning;
+export default ServiceDetailTraningHome;

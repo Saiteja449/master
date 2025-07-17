@@ -1420,7 +1420,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#FBAB51', // Background color of the tab bar
     borderRadius: 66,
     marginHorizontal: 12,
-    paddingHorizontal: 7,
+    marginTop:12
+    // paddingHorizontal: 7,
   },
   tab: {
     flex: 1,
