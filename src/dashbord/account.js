@@ -21,6 +21,7 @@ import Whatsapp from '../../assets/images/whatsapp.svg';
 import Share2 from '../../assets/images/share.svg';
 import MessageImg from '../../assets/images/message_img.svg';
 import RightArrow from '../../assets/images/right_arrow.svg';
+import PBanner from '../../assets/images/pbanner.svg';
 import EarnOrder from '../../assets/images/earn_order.svg';
 import EarnRate from '../../assets/images/earn_rate.svg';
 import EarnCoin from '../../assets/images/earn_coin.svg';
@@ -166,62 +167,72 @@ const AccountScreens = () => {
             </View>
           </View>
         </View>
-        <LinearGradient
-          colors={['#884CEB', '#4B35C8']}
-          start={{ x: 0, y: 1 }}
-          style={globle_Style.accnt_shr_con}
-        >
-          <View style={globle_Style.accnt_invit}>
-            <View style={globle_Style.accnt_invit_lft}>
-              <Text style={globle_Style.accnt_invit_txt}>
-                25% off for you, 25% off for them!
-              </Text>
-              <Text style={globle_Style.accnt_invit_para}>
-                Invite a pet parent get instant cashback
-              </Text>
-            </View>
-            <View style={globle_Style.accnt_invit_rgt}>
-              <Coin />
-            </View>
-          </View>
-          <View
-            style={[
-              globle_Style.share_btn_lst,
-              Platform.OS === 'ios' ? { justifyContent: 'flex-end' } : {},
-            ]}
+        <View style={[globle_Style.accnt_shrlnk]}>
+          {/* <LinearGradient
+            colors={['#884CEB', '#4B35C8']}
+            start={{ x: 0, y: 1 }}
+            style={globle_Style.accnt_shr_con}
           >
-            <LinearGradient
-              colors={['#FBAB51', '#FE8705']}
-              style={globle_Style.linear_share}
-            >
-              <View style={globle_Style.share_btn_lft}>
-                <Whatsapp />
-                <Text style={globle_Style.share_txt}>WhatsApp</Text>
-              </View>
-            </LinearGradient>
-
-            <TouchableWithoutFeedback
-              onPress={() => {
-                Share.share({
-                  message:
-                    'https://play.google.com/store/apps/details?id=com.petsfolio.employee&pli=1',
-                  title: 'Petsfolio App',
-                  url: 'https://play.google.com/store/apps/details?id=com.petsfolio.employee&pli=1', // Note: iOS supports `url`, Android uses `message`
-                });
-              }}
-            >
-              <View style={globle_Style.share_btn_rgt}>
-                <Share2 />
-                <Text
-                  style={[globle_Style.share_txt, globle_Style.shr_lnk_txt]}
-                >
-                  Share Link
+            <View style={globle_Style.accnt_invit}>
+              <View style={globle_Style.accnt_invit_lft}>
+                <Text style={globle_Style.accnt_invit_txt}>
+                  25% off for you, 25% off for them!
+                </Text>
+                <Text style={globle_Style.accnt_invit_para}>
+                  Invite a pet parent get instant cashback
                 </Text>
               </View>
-            </TouchableWithoutFeedback>
-          </View>
-        </LinearGradient>
-        <View style={[globle_Style.accnt_shrlnk]}>
+              <View style={globle_Style.accnt_invit_rgt}>
+                <Coin />
+              </View>
+            </View>
+            <View style={globle_Style.share_btn_lst}>
+              <LinearGradient
+                colors={['#FBAB51', '#FE8705']}
+                style={globle_Style.linear_share}
+              >
+                <View style={globle_Style.share_btn_lft}>
+                  <Whatsapp />
+                  <Text style={globle_Style.share_txt}>WhatsApp</Text>
+                </View>
+              </LinearGradient>
+              <TouchableWithoutFeedback
+                onPress={() => {
+                  Share.share({
+                    message:
+                      'https://play.google.com/store/apps/details?id=com.petsfolio.employee&pli=1',
+                    title: 'Petsfolio App',
+                    url: 'https://play.google.com/store/apps/details?id=com.petsfolio.employee&pli=1', // Note: iOS supports `url`, Android uses `message`
+                  });
+                }}
+              >
+                <View style={globle_Style.share_btn_rgt}>
+                  <Share2 />
+                  <Text
+                    style={[globle_Style.share_txt, globle_Style.shr_lnk_txt]}
+                  >
+                    Share Link
+                  </Text>
+                </View>
+              </TouchableWithoutFeedback>
+            </View>
+          </LinearGradient> */}
+
+          <TouchableWithoutFeedback
+            onPress={() => {
+              Platform.OS === 'android'
+                ? Share.share({
+                    message:
+                      'https://play.google.com/store/apps/details?id=com.petsfolio.employee&pli=1',
+                    title: 'Petsfolio App',
+                    url: 'https://play.google.com/store/apps/details?id=com.petsfolio.employee&pli=1', // Note: iOS supports `url`, Android uses `message`
+                  })
+                : null;
+            }}
+          >
+            <PBanner style={{ alignSelf: 'center', marginBottom: 20 }} />
+          </TouchableWithoutFeedback>
+
           <View style={globle_Style.accnt_edit_con}>
             <View style={globle_Style.accnt_edit_lft}>
               <View style={globle_Style.accnt_img}>
