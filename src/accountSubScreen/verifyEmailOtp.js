@@ -17,7 +17,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { CommonActions } from '@react-navigation/native';
 import { API_BASE_URL } from '../constants/constant';
 
-const OtpVerify = ({ route, navigation }) => {
+const EmailOtpVerify = ({ route, navigation }) => {
   const [otp, setOtp] = useState(Array(4).fill(''));
   const inputRefs = useRef([]);
   const { email } = route.params;
@@ -288,4 +288,4 @@ const OtpVerify = ({ route, navigation }) => {
   );
 };
 
-export default OtpVerify;
+export default EmailOtpVerify;

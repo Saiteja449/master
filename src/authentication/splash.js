@@ -25,6 +25,7 @@ import DeviceInfo from 'react-native-device-info';
 const SplashScreen = ({ navigation }) => {
   const { VersionModule } = NativeModules;
   const [fireStoreVersion, setFireStoreVersion] = useState('');
+  const [forceUpdate, setForceUpdate] = useState(false);
   const [updatePopup, setUpdatePopup] = useState(false);
 
   useEffect(() => {
@@ -114,7 +115,8 @@ const SplashScreen = ({ navigation }) => {
     try {
       const latestVersion = await firestore().collection('versions').get();
       console.warn('VERSIONNNN ::', latestVersion.docs[0]._data.version_master);
-      setFireStoreVersion(latestVersion.docs[0]._data.version);
+      setForceUpdate(latestVersion.docs[0]._data.force_update);
+      setFireStoreVersion(latestVersion.docs[0]._data.version_master);
     } catch (error) {
       console.log(error);
     }
@@ -153,7 +155,15 @@ const SplashScreen = ({ navigation }) => {
     const localVersionName = DeviceInfo.getVersion();
     console.log(localVersionName, fireStoreVersion);
     if (localVersionName !== fireStoreVersion) {
-      setUpdatePopup(true);
+      if (forceUpdate) {
+        setUpdatePopup(true);
+      } else {
+        if (userData) {
+          navigation.replace('DashboardScreen');
+        } else {
+          navigation.replace('LoginScreen');
+        }
+      }
     } else {
       if (userData) {
         if (

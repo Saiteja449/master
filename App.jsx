@@ -75,6 +75,7 @@ import TermsandCondition from './src/WebView/TermsandCondition.js';
 import PrivacyPolicy from './src/WebView/PrivacyPolicy.js';
 import MessageScreens from './src/dashbord/Message.js';
 import MessageChat from './src/messageChat/messageChat.js';
+import EmailOtpVerify from './src/accountSubScreen/verifyEmailOtp.js';
 const App = () => {
   const Stack = createNativeStackNavigator();
   const Tab = createBottomTabNavigator();
@@ -146,7 +147,6 @@ const App = () => {
   //   );
   // };
   const HomeNavigations = () => (
-    <AppContext>
       <Stack.Navigator
         screenOptions={{
           headerTitleAlign: 'center',
@@ -384,7 +384,6 @@ const App = () => {
           }}
         />
       </Stack.Navigator>
-    </AppContext>
   );
 
   const TabNavigations = () => (
@@ -538,11 +537,11 @@ const App = () => {
         component={EmailVerification}
         options={{ title: 'Email Verification' }}
       />
-      {/* <Stack.Screen
-          name="EmailVerificationopt"
-          component={EmailVerificationOtp}
-          options={{ title: 'Verifiy OTP' }}
-        /> */}
+      <Stack.Screen
+        name="EmailVerificationopt"
+        component={EmailOtpVerify}
+        options={{ title: 'Verifiy OTP' }}
+      />
       <Stack.Screen
         name="IdentityProof"
         component={IdentityProof}

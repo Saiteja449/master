@@ -1219,6 +1219,7 @@ export default globle_Style = StyleSheet.create({
     paddingHorizontal: 20,
     color: '#393939',
     fontSize: 13,
+    lineHeight: 15,
     fontFamily: 'Inter-Medium',
     fontWeight: '500',
     borderRadius: 8,
@@ -2233,8 +2234,8 @@ export default globle_Style = StyleSheet.create({
     // paddingVertical: 20,
     // paddingHorizontal: 16,
   },
-  wallet_trans:{
-     paddingVertical: 20,
+  wallet_trans: {
+    paddingVertical: 20,
     paddingHorizontal: 16,
   },
   wallet_grad: {

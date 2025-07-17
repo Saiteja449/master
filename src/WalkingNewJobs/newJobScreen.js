@@ -699,7 +699,7 @@ const NewJobs = () => {
 
   const TodayJobs = () => (
     <View style={globle_Style.container}>
-      {todayActiveJob.length > 0 ? (
+      {todayActiveJob?.length > 0 ? (
         isLoading ? (
           <ActivityIndicator
             style={{
@@ -748,7 +748,7 @@ const NewJobs = () => {
 
   const UpcomingJobs = () => (
     <View style={globle_Style.container}>
-      {upcomingActiveJob.length > 0 ? (
+      {upcomingActiveJob?.length > 0 ? (
         isLoading ? (
           <ActivityIndicator
             style={{
@@ -854,7 +854,7 @@ const NewJobs = () => {
   const WalkNewJobs = () => {
     return (
       <View style={globle_Style.container}>
-        {newJobData.length > 0 ? (
+        {newJobData?.length > 0 ? (
           isLoading ? (
             <ActivityIndicator
               style={{
@@ -905,7 +905,7 @@ const NewJobs = () => {
   const MyQuotesTab = () => {
     return (
       <View style={globle_Style.container}>
-        {myQuoteData.length > 0 ? (
+        {myQuoteData?.length > 0 ? (
           isLoading ? (
             <ActivityIndicator
               style={{
