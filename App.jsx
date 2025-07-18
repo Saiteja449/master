@@ -167,6 +167,9 @@ const App = () => {
           options={{
             title: 'Dog Walking',
             headerTitleAlign: 'center',
+            headerTitleStyle: {
+              fontFamily: 'Inter-SemiBold',
+            },
           }}
         />
         <Stack.Screen name="Quotes" component={AllQuotes} />
@@ -270,6 +273,9 @@ const App = () => {
           options={{
             title: 'Dog Grooming', // Set the title text
             headerTitleAlign: 'center', // Center the title
+            headerTitleStyle: {
+              fontFamily: 'Inter-SemiBold',
+            },
           }}
         />
         <Stack.Screen
@@ -328,6 +334,9 @@ const App = () => {
           options={{
             title: 'Dog Training', // Set the title text
             headerTitleAlign: 'center', // Center the title
+            headerTitleStyle: {
+              fontFamily: 'Inter-SemiBold',
+            },
           }}
         />
         <Stack.Screen

@@ -21,6 +21,7 @@ import UpdateVer from '../../assets/images/updateVer.svg';
 import UpdatePaw from '../../assets/images/updatepaw.svg';
 import LinearGradient from 'react-native-linear-gradient';
 import DeviceInfo from 'react-native-device-info';
+import { check, PERMISSIONS, request, RESULTS } from 'react-native-permissions';
 
 const SplashScreen = ({ navigation }) => {
   const { VersionModule } = NativeModules;
@@ -44,10 +45,38 @@ const SplashScreen = ({ navigation }) => {
     getLocation2();
   }, []);
 
+  // const requestLocationPermission2 = async () => {
+  //   if (Platform.OS === 'android') {
+  //     try {
+  //       const granted = await PermissionsAndroid.request(
+  //         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+  //         {
+  //           title: 'Location Permission',
+  //           message:
+  //             'This app needs access to your location to provide location-based services.',
+  //           buttonPositive: 'OK',
+  //         },
+  //       );
+
+  //       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+  //         getLocation2();
+  //         console.log('Location permission granted.');
+  //       } else {
+  //         console.log('Location permission denied.');
+  //       }
+  //     } catch (err) {
+  //       console.warn('Error while requesting location permission:', err);
+  //     }
+  //   } else {
+  //     console.log('No need to request location permission for this device.');
+  //   }
+  // };
+
   const requestLocationPermission2 = async () => {
-    if (Platform.OS === 'android') {
-      try {
-        const granted = await PermissionsAndroid.request(
+    try {
+      let status;
+      if (Platform.OS === 'android') {
+        status = await PermissionsAndroid.request(
           PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
           {
             title: 'Location Permission',
@@ -56,18 +85,21 @@ const SplashScreen = ({ navigation }) => {
             buttonPositive: 'OK',
           },
         );
-
-        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-          getLocation2();
-          console.log('Location permission granted.');
-        } else {
-          console.log('Location permission denied.');
+      } else {
+        status = await check(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE);
+        if (status !== RESULTS.GRANTED) {
+          status = await request(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE);
         }
-      } catch (err) {
-        console.warn('Error while requesting location permission:', err);
       }
-    } else {
-      console.log('No need to request location permission for this device.');
+
+      if (status === RESULTS.GRANTED) {
+        getLocation2();
+        return true;
+      }
+      return false;
+    } catch (err) {
+      console.warn('Error while requesting location permission:', err);
+      return false;
     }
   };
 

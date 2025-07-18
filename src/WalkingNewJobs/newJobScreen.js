@@ -83,7 +83,7 @@ const NewJobs = () => {
   // }, [])
 
   useFocusEffect(
-    useCallback(() => {
+    React.useCallback(() => {
       fetchNewJobsApiData();
       fetchMyQuoteApiData();
       fetchActiveJobsApiData();
@@ -1440,6 +1440,7 @@ const styles = StyleSheet.create({
     borderRadius: 47,
     width: 100,
     textAlign: 'center',
+    fontFamily:'Inter-SemiBold'
   },
   activeLabel: {
     backgroundColor: '#fff', // Background color for active tab label
