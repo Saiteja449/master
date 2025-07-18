@@ -33,7 +33,7 @@ import Other from '../../assets/images/other.svg';
 import ClosePopup from '../../assets/images/close_popup.svg';
 import LinearGradient from 'react-native-linear-gradient';
 import BackgroundTimer from 'react-native-background-timer';
-import { request, RESULTS } from 'react-native-permissions';
+import { PERMISSIONS, request, RESULTS } from 'react-native-permissions';
 
 const WalkTracking = ({ route }) => {
   const [origin, setOrigin] = useState(null); // Starting point
