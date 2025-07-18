@@ -15,12 +15,12 @@ import {
   Linking,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+// import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import globle_Style from '../css/globle_Style';
 import NewjobOne from '../../assets/images/newjob_one.svg';
 import DistaneMap from '../../assets/images/distance_map.svg';
 import LinearGradient from 'react-native-linear-gradient';
-import { useTheme } from '@react-navigation/native';
+// import { useTheme } from '@react-navigation/native';
 import { UserContext } from '../common/AppContext';
 import { API_BASE_URL, formatDate } from '../constants/constant';
 import ClosePopup from '../../assets/images/close_popup.svg';
@@ -32,7 +32,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import moment from 'moment';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const Tab = createMaterialTopTabNavigator();
+// const Tab = createMaterialTopTabNavigator();
 
 const NewJobs = () => {
   const navination = useNavigation();
@@ -51,6 +51,30 @@ const NewJobs = () => {
   const [selectedActiveBookingId, setSelectedActiveBookingId] = useState('');
   const [selectedActivePetId, setSelectedActivePetId] = useState('');
   const [startwalkTimeValidate, setStartwalkTimeValidate] = useState(false);
+
+  const [activeTab, setActiveTab] = useState('New Jobs');
+  const [activeJobMiniTab, setActiveJobMiniTab] = useState('Today');
+
+  const renderContent = () => {
+    switch (activeTab) {
+      case 'New Jobs':
+        return <WalkNewJobs />;
+      case 'My Quotes':
+        return <MyQuotesTab />;
+      case 'Active':
+        return <ActiveJobsTab />;
+      default:
+        return null;
+    }
+  };
+
+  const renderMiniTabBarContent = () => {
+    if (activeJobMiniTab === 'Today') return <TodayJobs />;
+    if (activeJobMiniTab === 'Upcoming') return <UpcomingJobs />;
+    return null;
+  };
+
+  const tabs = ['New Jobs', 'My Quotes', 'Active'];
 
   // useEffect(() => {
   //   fetchNewJobsApiData()
@@ -667,35 +691,35 @@ const NewJobs = () => {
     }
   };
 
-  const ActiveJobMyTabs = () => {
-    return (
-      <Tab.Navigator
-        screenOptions={{
-          tabBarActiveTintColor: '#000000', // Active tab label and indicator color
-          tabBarInactiveTintColor: '#929292', // Inactive tab label color
+  // const ActiveJobMyTabs = () => {
+  //   return (
+  //     <Tab.Navigator
+  //       screenOptions={{
+  //         tabBarActiveTintColor: '#000000', // Active tab label and indicator color
+  //         tabBarInactiveTintColor: '#929292', // Inactive tab label color
 
-          tabBarIndicatorStyle: {
-            backgroundColor: '#FCA33F', // Active tab indicator color
-            width: 105,
-            position: 'absolute',
-            bottom: 0,
-            left: '10%', // Position the indicator in the center
-          },
-        }}
-      >
-        <Tab.Screen
-          name="Today Jobs"
-          component={TodayJobs}
-          options={{ title: 'Today Jobs' }}
-        />
-        <Tab.Screen
-          name="Upcoming Jobs"
-          component={UpcomingJobs}
-          options={{ title: 'Upcoming Jobs' }}
-        />
-      </Tab.Navigator>
-    );
-  };
+  //         tabBarIndicatorStyle: {
+  //           backgroundColor: '#FCA33F', // Active tab indicator color
+  //           width: 105,
+  //           position: 'absolute',
+  //           bottom: 0,
+  //           left: '10%', // Position the indicator in the center
+  //         },
+  //       }}
+  //     >
+  //       <Tab.Screen
+  //         name="Today Jobs"
+  //         component={TodayJobs}
+  //         options={{ title: 'Today Jobs' }}
+  //       />
+  //       <Tab.Screen
+  //         name="Upcoming Jobs"
+  //         component={UpcomingJobs}
+  //         options={{ title: 'Upcoming Jobs' }}
+  //       />
+  //     </Tab.Navigator>
+  //   );
+  // };
 
   const TodayJobs = () => (
     <View style={globle_Style.container}>
@@ -955,8 +979,59 @@ const NewJobs = () => {
 
   const ActiveJobsTab = () => {
     return (
-      <View style={{ flex: 1, backgroundColor: '#fff' }}>
-        <ActiveJobMyTabs />
+      <View style={{ flex: 1 }}>
+        <View style={styles.innerTabBar}>
+          <TouchableOpacity
+            onPress={() => setActiveJobMiniTab('Today')}
+            style={[
+              styles.innerTabButton,
+              activeJobMiniTab === 'Today' && styles.innerTabActive,
+            ]}
+          >
+            <Text
+              style={[
+                styles.innerTabText,
+                activeJobMiniTab === 'Today'
+                  ? styles.innerTabTextActive
+                  : styles.innerTabTextInactive,
+              ]}
+            >
+              Today Jobs
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => setActiveJobMiniTab('Upcoming')}
+            style={[
+              styles.innerTabButton,
+              activeJobMiniTab === 'Upcoming' && styles.innerTabActive,
+            ]}
+          >
+            <Text
+              style={[
+                styles.innerTabText,
+                activeJobMiniTab === 'Upcoming'
+                  ? styles.innerTabTextActive
+                  : styles.innerTabTextInactive,
+              ]}
+            >
+              Upcoming Jobs
+            </Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* Indicator */}
+        <View style={styles.indicatorContainer}>
+          <View
+            style={[
+              styles.indicator,
+              activeJobMiniTab === 'Today' ? { left: '10%' } : { left: '55%' },
+            ]}
+          />
+        </View>
+
+        {/* Tab Content */}
+        <View style={{ flex: 1 }}>{renderMiniTabBarContent()}</View>
       </View>
       // <View style={globle_Style.container}>
       //   {
@@ -1001,44 +1076,44 @@ const NewJobs = () => {
     );
   };
 
-  const MyTabs = () => {
-    return (
-      <Tab.Navigator
-        tabBar={props => <CustomTabBar {...props} />}
-        screenOptions={{
-          tabBarStyle: {
-            shadowRadius: 0,
-            elevation: 0,
-            backgroundColor: '#FBAB51',
-            borderRadius: 66,
-            paddingVertical: 6,
-          },
-          tabBarIndicatorStyle: {
-            display: 'none', // Hide the indicator
-          },
-          tabBarLabelStyle: {
-            fontSize: 13,
-            fontWeight: '600',
-            backgroundColor: '#fff',
-            lineHeight: 44,
-            borderRadius: 47,
-            width: 100,
-          },
-          tabBarItemStyle: {
-            padding: 0, // Remove padding for each tab item
-          },
-          tabBarActiveTintColor: '#1D1D1D',
-          tabBarInactiveTintColor: '#fff',
-          tabBarActiveBackgroundColor: '#4a90e2',
-          tabBarInactiveBackgroundColor: '#FFFFFF33',
-        }}
-      >
-        <Tab.Screen name="New Jobs" component={WalkNewJobs} />
-        <Tab.Screen name="My Quotes" component={MyQuotesTab} />
-        <Tab.Screen name="Active" component={ActiveJobsTab} />
-      </Tab.Navigator>
-    );
-  };
+  // const MyTabs = () => {
+  //   return (
+  //     <Tab.Navigator
+  //       tabBar={props => <CustomTabBar {...props} />}
+  //       screenOptions={{
+  //         tabBarStyle: {
+  //           shadowRadius: 0,
+  //           elevation: 0,
+  //           backgroundColor: '#FBAB51',
+  //           borderRadius: 66,
+  //           paddingVertical: 6,
+  //         },
+  //         tabBarIndicatorStyle: {
+  //           display: 'none', // Hide the indicator
+  //         },
+  //         tabBarLabelStyle: {
+  //           fontSize: 13,
+  //           fontWeight: '600',
+  //           backgroundColor: '#fff',
+  //           lineHeight: 44,
+  //           borderRadius: 47,
+  //           width: 100,
+  //         },
+  //         tabBarItemStyle: {
+  //           padding: 0, // Remove padding for each tab item
+  //         },
+  //         tabBarActiveTintColor: '#1D1D1D',
+  //         tabBarInactiveTintColor: '#fff',
+  //         tabBarActiveBackgroundColor: '#4a90e2',
+  //         tabBarInactiveBackgroundColor: '#FFFFFF33',
+  //       }}
+  //     >
+  //       <Tab.Screen name="New Jobs" component={WalkNewJobs} />
+  //       <Tab.Screen name="My Quotes" component={MyQuotesTab} />
+  //       <Tab.Screen name="Active" component={ActiveJobsTab} />
+  //     </Tab.Navigator>
+  //   );
+  // };
 
   const handleTimeSelection = (index, time) => {
     setselectedRadio(index);
@@ -1157,7 +1232,29 @@ const NewJobs = () => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
-        <MyTabs />
+        <LinearGradient colors={['#FBAB51', '#FE8705']} style={styles.tabBar}>
+          {tabs.map((tab, index) => {
+            const isFocused = activeTab === tab;
+            return (
+              <TouchableOpacity
+                key={index}
+                onPress={() => setActiveTab(tab)}
+                style={[styles.tab, isFocused && styles.activeTab]}
+              >
+                <Text
+                  style={[
+                    styles.label,
+                    isFocused ? styles.activeLabel : styles.inactiveLabel,
+                  ]}
+                >
+                  {tab}
+                </Text>
+              </TouchableOpacity>
+            );
+          })}
+        </LinearGradient>
+
+        <View style={{ flex: 1 }}>{renderContent()}</View>
       </View>
 
       {/* start popup  */}
@@ -1259,63 +1356,63 @@ const NewJobs = () => {
   );
 };
 
-const CustomTabBar = ({ state, descriptors, navigation }) => {
-  const { colors } = useTheme();
+// const CustomTabBar = ({ state, descriptors, navigation }) => {
+//   const { colors } = useTheme();
 
-  return (
-    <LinearGradient colors={['#FBAB51', '#FE8705']} style={styles.tabBar}>
-      {state.routes.map((route, index) => {
-        const { options } = descriptors[route.key];
-        const label =
-          options.tabBarLabel !== undefined
-            ? options.tabBarLabel
-            : options.title !== undefined
-            ? options.title
-            : route.name;
+//   return (
+//     <LinearGradient colors={['#FBAB51', '#FE8705']} style={styles.tabBar}>
+//       {state.routes.map((route, index) => {
+//         const { options } = descriptors[route.key];
+//         const label =
+//           options.tabBarLabel !== undefined
+//             ? options.tabBarLabel
+//             : options.title !== undefined
+//             ? options.title
+//             : route.name;
 
-        const isFocused = state.index === index;
+//         const isFocused = state.index === index;
 
-        const onPress = () => {
-          const event = navigation.emit({
-            type: 'tabPress',
-            target: route.key,
-            canPreventDefault: true,
-          });
+//         const onPress = () => {
+//           const event = navigation.emit({
+//             type: 'tabPress',
+//             target: route.key,
+//             canPreventDefault: true,
+//           });
 
-          if (!isFocused && !event.defaultPrevented) {
-            navigation.navigate(route.name);
-          }
-        };
+//           if (!isFocused && !event.defaultPrevented) {
+//             navigation.navigate(route.name);
+//           }
+//         };
 
-        return (
-          <TouchableOpacity
-            key={index}
-            accessibilityRole="button"
-            accessibilityState={isFocused ? { selected: true } : {}}
-            accessibilityLabel={label}
-            onPress={onPress}
-            style={[styles.tab, isFocused && styles.activeTab]}
-          >
-            <Text
-              style={[
-                styles.label,
-                isFocused ? styles.activeLabel : styles.inactiveLabel,
-              ]}
-            >
-              <Text
-                style={[
-                  styles.label,
-                  isFocused ? styles.tabBar : styles.inactivetabBar,
-                ]}
-              ></Text>
-              {label}
-            </Text>
-          </TouchableOpacity>
-        );
-      })}
-    </LinearGradient>
-  );
-};
+//         return (
+//           <TouchableOpacity
+//             key={index}
+//             accessibilityRole="button"
+//             accessibilityState={isFocused ? { selected: true } : {}}
+//             accessibilityLabel={label}
+//             onPress={onPress}
+//             style={[styles.tab, isFocused && styles.activeTab]}
+//           >
+//             <Text
+//               style={[
+//                 styles.label,
+//                 isFocused ? styles.activeLabel : styles.inactiveLabel,
+//               ]}
+//             >
+//               <Text
+//                 style={[
+//                   styles.label,
+//                   isFocused ? styles.tabBar : styles.inactivetabBar,
+//                 ]}
+//               ></Text>
+//               {label}
+//             </Text>
+//           </TouchableOpacity>
+//         );
+//       })}
+//     </LinearGradient>
+//   );
+// };
 
 const styles = StyleSheet.create({
   tabBar: {
@@ -1324,7 +1421,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FBAB51', // Background color of the tab bar
     borderRadius: 66,
     marginHorizontal: 12,
-    marginTop:12
+    marginTop: 12,
     // paddingHorizontal: 7,
   },
   tab: {
@@ -1362,6 +1459,43 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff', // Safe area background color
     paddingTop: 20,
+  },
+  innerTabBar: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    backgroundColor: '#fff',
+    paddingTop: 10,
+  },
+  innerTabButton: {
+    paddingVertical: 10,
+    width: 120,
+    alignItems: 'center',
+  },
+  innerTabActive: {
+    // Optional: active tab container style
+  },
+  innerTabText: {
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  innerTabTextActive: {
+    color: '#000000',
+  },
+  innerTabTextInactive: {
+    color: '#929292',
+  },
+  indicatorContainer: {
+    height: 2,
+    position: 'relative',
+    backgroundColor: 'transparent',
+  },
+  indicator: {
+    width: 125,
+    height: 2,
+    backgroundColor: '#FCA33F',
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
   },
 });
 

@@ -161,7 +161,7 @@ const SplashScreen = ({ navigation }) => {
         if (userData) {
           navigation.replace('DashboardScreen');
         } else {
-          navigation.replace('LoginScreen');
+          navigation.replace('Log In or Sign Up'); //changed name
         }
       }
     } else {
