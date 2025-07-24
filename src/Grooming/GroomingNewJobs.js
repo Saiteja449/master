@@ -560,7 +560,8 @@ const GroomingNewJobs = () => {
   };
 
   const renderItemmm = ({ item }) => (
-    <View style={globle_Style.job_lst_con}>
+
+    <View style={[globle_Style.job_lst_con, {opacity : item.track_status === 'approved' ? 0.5 : 1}]}>
       <View style={globle_Style.newjob_lst}>
         <View style={globle_Style.newjob_itm_lft}>
           {item.image ? (
@@ -602,7 +603,7 @@ const GroomingNewJobs = () => {
 
         <TouchableWithoutFeedback
           onPress={() => {
-            if (item.track_status == 'terminate') return;
+            if (item.track_status == 'terminate' || item.track_status === 'approved') return;
             handleGrooming(
               item.booking_id,
               item.pet_id,
